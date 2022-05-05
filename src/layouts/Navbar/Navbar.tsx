@@ -1,7 +1,3 @@
 export const Navbar = () => {
-  return (
-      <nav>
-          Logo
-      </nav>
-  )
+  return <nav>Logo</nav>
 }
