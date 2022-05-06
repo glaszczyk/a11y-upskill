@@ -1,0 +1,14 @@
+@import "../../styles/mediaQuery.module";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  @include large {
+    margin: 0 auto;
+    width: 1440px;
+  }
+
+}
+
+
