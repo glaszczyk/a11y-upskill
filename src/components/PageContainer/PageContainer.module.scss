@@ -1,5 +1,14 @@
+@import "../../styles/mediaQuery.module";
+
 .container {
-  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  @include large {
+    margin: 0 auto;
+    width: 1440px;
+  }
+
 }
 
 
