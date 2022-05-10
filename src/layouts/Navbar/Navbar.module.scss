@@ -11,8 +11,10 @@
 .menuItem {
   margin-left: 2rem;
   list-style: none;
+  & :focus {
+    font-weight: bold;
+  }
 }
 
 .logo {
-
 }
