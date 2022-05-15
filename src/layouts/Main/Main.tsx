@@ -1,7 +1,7 @@
 import styles from './Main.module.scss'
 
 type MainPropTypes = {
-  children: JSX.Element
+  children: JSX.Element | JSX.Element[]
 }
 export const Main = ({ children }: MainPropTypes) => {
   return (
