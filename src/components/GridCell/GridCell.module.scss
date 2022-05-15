@@ -1,0 +1,14 @@
+@import 'src/styles/mediaQuery.module';
+
+.gridCellFixed {
+  flex: 1 0 100%;
+}
+.gridCellResponsive {
+  flex: 1 0 100%;
+  @include min-medium {
+    flex: 0 0 45%;
+  }
+  @include min-medium {
+    flex: 0 0 40%;
+  }
+}

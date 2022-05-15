@@ -1,3 +1,19 @@
+@import 'src/styles/mediaQuery.module';
+
 .grid {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: calc(100% - 4rem);
+  @include min-small {
+    width: 400px;
+  }
+  @include min-medium {
+    flex-wrap: nowrap;
+    width: calc(100% - 4rem);
+  }
+  @include min-limited {
+    width: 960px;
+    margin: 0 auto;
+  }
 }
