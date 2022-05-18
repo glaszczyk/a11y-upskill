@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 
-import { Navbar } from '../layouts/Navbar/Navbar'
-import { Footer } from '../layouts/Footer/Footer'
-import { Main } from '../layouts/Main/Main'
-import { PageContainer } from '../components/PageContainer/PageContainer'
+import { Navbar } from '../layouts/Navbar'
+import { Footer } from '../layouts/Footer'
+import { Main } from '../layouts/Main'
+import { PageContainer } from '../components/PageContainer'
 
 const Home: NextPage = () => {
   return (

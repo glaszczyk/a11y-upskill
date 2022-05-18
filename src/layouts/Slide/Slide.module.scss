@@ -1,0 +1,27 @@
+@import '../../styles/mediaQuery.module';
+
+.slide {
+  align-items: center;
+  aspect-ratio: 3/4;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  @include min-small {
+    aspect-ratio: 3/2;
+  }
+  @include min-medium {
+    aspect-ratio: 2/1;
+  }
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 75%;
+  @include min-small {
+    width: 50%;
+  }
+}

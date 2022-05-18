@@ -1,16 +1,29 @@
+@import '/src/styles/mediaQuery.module';
 .container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  @include min-small {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .menu {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-start;
+  @include min-small {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
 }
 
 .menuItem {
-  margin-left: 2rem;
   list-style: none;
+  margin-left: 0;
+  @include min-small {
+    margin-left: 2rem;
+  }
   & :focus {
     font-weight: bold;
   }

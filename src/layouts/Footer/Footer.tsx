@@ -6,17 +6,19 @@ import Logo from '../../../public/TheInsurerLogo.svg'
 export const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <Link href="/">
-        <a>
-          <Image
-            src={Logo}
-            className={styles.logo}
-            alt=""
-            width={200}
-            height={43}
-          />
-        </a>
-      </Link>
+      <div className={styles.imageContainer}>
+        <Link href="/">
+          <a>
+            <Image
+              src={Logo}
+              className={styles.logo}
+              alt=""
+              width={200}
+              height={43}
+            />
+          </a>
+        </Link>
+      </div>
       <div className={styles.menuContainer}>
         <ol className={styles.menu}>
           <li className={styles.menuItem}>
@@ -68,12 +70,16 @@ export const Footer = () => {
           </li>
           <li className={styles.menuItem}>
             <Link href="/marine-captain-crew">
-              <a rel="noopener noreferrer">Marine Captain / Crew</a>
+              <a rel="noopener noreferrer">
+                Marine Captain /<br /> Crew
+              </a>
             </Link>
           </li>
           <li className={styles.menuItem}>
             <Link href="/employer-business-traveler">
-              <a rel="noopener noreferrer">Employer / Business Traveler</a>
+              <a rel="noopener noreferrer">
+                Employer /<br /> Business Traveler
+              </a>
             </Link>
           </li>
         </ol>
