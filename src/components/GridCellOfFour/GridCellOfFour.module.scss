@@ -2,37 +2,35 @@
 
 %gridBase {
   display: flex;
+  flex-wrap: wrap;
 }
 
-.gridCellFixed {
+.gridCellOfFourFixed {
   @extend %gridBase;
   flex: 1 1 100%;
 }
-.gridCellResponsive {
+.gridCellOfFourResponsive {
   @extend %gridBase;
   flex: 1 1 100%;
   @include min-medium {
-    flex: 1 1 30%;
+    flex: 1 1 40%;
   }
   @include min-large {
     flex: 1 1 40%;
   }
-  &:first-child {
-    @include min-medium {
-      margin-right: 2rem;
-    }
-  }
-  &:last-child {
-    @include min-medium {
-      margin-left: 2rem;
-    }
-  }
+}
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-spaceBetween {
+  justify-content: space-between;
 }
 
 .direction-row {
   flex-direction: column;
   @include min-small {
-    align-items: center;
+    align-items: flex-start;
     flex-direction: row;
   }
 }

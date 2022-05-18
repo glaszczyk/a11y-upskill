@@ -1,10 +1,24 @@
-@import '../../styles/colors.module';
+@import 'src/styles/colors.module';
+@import 'src/styles/mediaQuery.module';
 
 %baseButton {
-  border-style: none;
-  font-size: 1.25rem;
-  padding: 0.5rem 2rem;
   border-radius: 4px;
+  border-style: none;
+  flex: 1 1 35%;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  max-width: 100%;
+  padding: 1rem 1rem;
+
+  @include min-small {
+    max-width: calc(100% / 2 - 1rem);
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  @include min-limited {
+    max-width: 40%;
+  }
 }
 
 .primary {

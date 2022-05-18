@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
+import Logo from '/public/sample-logo.svg'
+import Image from 'next/image'
 
-import { Test } from '../components/Test'
 import { Navbar } from '../layouts/Navbar'
 import { Footer } from '../layouts/Footer'
 import { Main } from '../layouts/Main'
@@ -9,6 +10,10 @@ import { Slide } from '../layouts/Slide'
 import { Button } from '../components/Button'
 import { Grid } from '../components/Grid'
 import { GridCell } from '../components/GridCell'
+import { Testimonial } from '../layouts/Testimonial'
+import styles from '../layouts/Navbar/Navbar.module.scss'
+import { GridCellOfFour } from '../components/GridCellOfFour'
+import { Blogpost } from '../components/Blogpost'
 
 const Home: NextPage = () => {
   return (
@@ -30,7 +35,38 @@ const Home: NextPage = () => {
           </p>
           <Button variant="primary">Order Now</Button>
         </Slide>
-        <Grid>
+        <Grid gap="big">
+          <GridCell responsive>
+            <Image src="/emergency.jpg" width={1200} height={800} alt="" />
+          </GridCell>
+          <GridCell responsive>
+            <h2>Insurance for International Visitors</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <ol>
+              <li>List item #1</li>
+              <li>List item #2</li>
+              <li>List item #2</li>
+            </ol>
+          </GridCell>
+        </Grid>
+        <Grid gap="big">
+          <GridCell responsive>
+            <h2>Safe Travels</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </p>
+          </GridCell>
+          <GridCell responsive>
+            <Image src="/fly.jpg" width={1200} height={800} alt="" />
+          </GridCell>
+        </Grid>
+        <Grid gap="big">
           <GridCell responsive>
             <p>This is grid element 1</p>
           </GridCell>
@@ -38,7 +74,52 @@ const Home: NextPage = () => {
             <p>This is grid element 2</p>
           </GridCell>
         </Grid>
-        <Test />
+        <Grid gap="big" direction="column">
+          <GridCell responsive={false} justify="center" direction="row">
+            <h2>Explore Our Travel Topics</h2>
+          </GridCell>
+          <GridCellOfFour responsive direction="row">
+            <Blogpost title="Renting Vacation Homes" imageSrc="/desert1.jpg" />
+            <Blogpost
+              title="Popular Travel Destinations fof 2021"
+              imageSrc="/desert2.jpg"
+            />
+            <Blogpost title="Trends & Predictions" imageSrc="/airport1.jpg" />
+            <Blogpost
+              title="Travel Gear for Safe Travels in 2021"
+              imageSrc="/airport2.jpg"
+            />
+          </GridCellOfFour>
+        </Grid>
+        <Testimonial
+          backgroundImage={{
+            url: '/testimonial-background.jpg',
+            position: 'center center',
+          }}
+        >
+          <h2>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua
+          </h2>
+          <Image
+            src={Logo}
+            className={styles.logo}
+            alt="Return to main page"
+            width={200}
+            height={43}
+          />
+          <p>Donald Duck, CEO of Disney</p>
+        </Testimonial>
+        <Grid gap="big">
+          <GridCell responsive>
+            <h2>Are you looking for an insurance?</h2>
+            <p>Contact us to order</p>
+          </GridCell>
+          <GridCell responsive justify="space-between" direction="row">
+            <Button variant="secondary">Send a Message </Button>
+            <Button variant="primary">Call Us</Button>
+          </GridCell>
+        </Grid>
       </Main>
       <Footer />
     </PageContainer>

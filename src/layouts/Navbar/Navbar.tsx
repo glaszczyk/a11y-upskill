@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import styles from './Navbar.module.scss'
-import Logo from '../../../public/TheInsurerLogo.svg'
+import Logo from '/public/TheInsurerLogo.svg'
 import Link from 'next/link'
 
 export const Navbar = () => {

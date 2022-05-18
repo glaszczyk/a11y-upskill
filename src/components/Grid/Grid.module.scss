@@ -17,3 +17,20 @@
     margin: 0 auto;
   }
 }
+
+.gap-big {
+  margin: 1rem 0;
+  @include min-small {
+    margin: 2rem 0;
+  }
+  @include min-medium {
+    margin: 3rem 0;
+  }
+  @include min-large {
+    margin: 5rem 0;
+  }
+}
+
+.gap-none {
+  margin: 0;
+}
