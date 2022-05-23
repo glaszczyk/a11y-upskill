@@ -1,16 +1,32 @@
 import styles from './ExpenseReportScreen.module.scss'
+import { Button } from '../../../../components/Button'
+import { useContext } from 'react'
+import { IncidentReportContext } from '../../IncidentReport'
 
 export const ExpenseReportScreen = () => {
+  const {
+    state: { expenseReport },
+    dispatch,
+  } = useContext(IncidentReportContext)
+
   return (
-    <form className={styles.report}>
-      <div>
-        <label htmlFor="firstName">First Name</label>
-        <input name="firstName" type="text" onChange={(e) => null} />
+    <fieldset className={styles.step}>
+      <div className={styles.navigation}>
+        <Button
+          className={styles.back}
+          variant="secondary"
+          onClick={() => dispatch({ type: 'returnToIncidentDetails' })}
+        >
+          Back
+        </Button>
+        <Button
+          className={styles.continue}
+          variant="primary"
+          onClick={() => dispatch({ type: 'submitReport' })}
+        >
+          Continue
+        </Button>
       </div>
-      <div>
-        <label htmlFor="lastName">Last Name</label>
-        <input name="lastName" type="text" onChange={(e) => null} />
-      </div>
-    </form>
+    </fieldset>
   )
 }

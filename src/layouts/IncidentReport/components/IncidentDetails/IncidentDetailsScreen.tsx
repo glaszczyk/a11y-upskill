@@ -1,7 +1,9 @@
 import styles from './IncidentDetailsScreen.module.scss'
 import { Button } from '../../../../components/Button'
-import { useContext } from 'react'
+import { FormEvent, useContext } from 'react'
 import { IncidentReportContext } from '../../IncidentReport'
+import { TextArea } from '../../../../components/TextArea'
+import { IncidentDetailsAction } from '../../types'
 import { Input } from '../../../../components/Input'
 
 export const IncidentDetailsScreen = () => {
@@ -10,6 +12,13 @@ export const IncidentDetailsScreen = () => {
     dispatch,
   } = useContext(IncidentReportContext)
 
+  const handleDispatch =
+    (actionName: IncidentDetailsAction) => (e: FormEvent<HTMLInputElement>) =>
+      dispatch({
+        type: actionName,
+        payload: e.currentTarget.value,
+      })
+
   return (
     <fieldset className={styles.step}>
       <Input
@@ -17,35 +26,41 @@ export const IncidentDetailsScreen = () => {
         label="Purpose of Travel"
         type="text"
         value={incidentDetails.travelPurpose}
-        dispatchType="changeTravelPurpose"
+        onChange={handleDispatch('changeTravelPurpose')}
       />
       <Input
         name="country"
         label="Country"
         type="text"
         value={incidentDetails.country}
-        dispatchType="changeCountry"
+        onChange={handleDispatch('changeCountry')}
       />
       <Input
         name="address"
         label="Address"
         type="text"
         value={incidentDetails.address}
-        dispatchType="changeAddress"
+        onChange={handleDispatch('changeAddress')}
       />
       <Input
         name="date"
         label="Date"
         type="text"
         value={incidentDetails.date}
-        dispatchType="changeDate"
+        onChange={handleDispatch('changeDate')}
       />
-      <Input
+      <TextArea
         name="incidentDescription"
         label="Incident Description"
-        type="text"
         value={incidentDetails.incidentDescription}
-        dispatchType="changeIncidentDescription"
+        rows={5}
+        cols={30}
+        onChange={(e: FormEvent<HTMLTextAreaElement>) =>
+          dispatch({
+            type: 'changeIncidentDescription',
+            payload: e.currentTarget.value,
+          })
+        }
       />
       <div className={styles.navigation}>
         <Button

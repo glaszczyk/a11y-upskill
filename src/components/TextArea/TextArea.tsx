@@ -1,16 +1,18 @@
 import { FormEvent } from 'react'
 
-import styles from './Input.module.scss'
+import styles from './TextArea.module.scss'
 
 type InputPropTypes = {
   name: string
   label: string
-  type: 'text' | 'email'
+  rows: number
+  cols: number
   value: string
-  onChange: (e: FormEvent<HTMLInputElement>) => void
+  onChange: (e: FormEvent<HTMLTextAreaElement>) => void
 }
-export const Input = ({
-  type = 'text',
+export const TextArea = ({
+  rows,
+  cols,
   onChange,
   label,
   name,
@@ -21,11 +23,12 @@ export const Input = ({
       <label className={styles.label} htmlFor={name}>
         {label}
       </label>
-      <input
-        className={styles.input}
+      <textarea
+        className={styles.textarea}
         name={name}
-        type={type}
         value={value}
+        rows={rows}
+        cols={cols}
         onChange={onChange}
       />
     </div>

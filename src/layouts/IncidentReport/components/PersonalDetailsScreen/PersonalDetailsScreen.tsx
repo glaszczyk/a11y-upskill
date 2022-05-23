@@ -1,7 +1,8 @@
 import styles from './PersonalDetailsScreen.module.scss'
-import { useContext } from 'react'
+import { FormEvent, useContext } from 'react'
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext } from '../../IncidentReport'
+import { PersonalDetailsAction } from '../../types'
 import { Input } from '../../../../components/Input'
 
 export const PersonalDetailsScreen = () => {
@@ -10,6 +11,13 @@ export const PersonalDetailsScreen = () => {
     dispatch,
   } = useContext(IncidentReportContext)
 
+  const handleDispatch =
+    (actionName: PersonalDetailsAction) => (e: FormEvent<HTMLInputElement>) =>
+      dispatch({
+        type: actionName,
+        payload: e.currentTarget.value,
+      })
+
   return (
     <fieldset className={styles.step}>
       <Input
@@ -17,42 +25,42 @@ export const PersonalDetailsScreen = () => {
         label="First Name"
         type="text"
         value={personalDetails.firstName}
-        dispatchType="changeFirstName"
+        onChange={handleDispatch('changeFirstName')}
       />
       <Input
         name="secondName"
         label="Second Name"
         type="text"
         value={personalDetails.secondName}
-        dispatchType="changeSecondName"
+        onChange={handleDispatch('changeSecondName')}
       />
       <Input
         name="birthday"
         label="Birthday"
         type="text"
         value={personalDetails.birthday}
-        dispatchType="changeBirthday"
+        onChange={handleDispatch('changeBirthday')}
       />
       <Input
         name="phone"
         label="Phone number"
         type="text"
         value={personalDetails.phone}
-        dispatchType="changePhone"
+        onChange={handleDispatch('changePhone')}
       />
       <Input
         name="email"
         label="Email"
         type="email"
         value={personalDetails.email}
-        dispatchType="changeEmail"
+        onChange={handleDispatch('changeEmail')}
       />
       <Input
         name="policyNo"
         label="Policy Number"
         type="text"
         value={personalDetails.policyNo}
-        dispatchType="changePolicyNo"
+        onChange={handleDispatch('changePolicyNo')}
       />
       <div className={styles.navigation}>
         <Button
