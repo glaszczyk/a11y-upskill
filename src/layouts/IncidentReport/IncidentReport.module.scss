@@ -1,0 +1,11 @@
+@import 'src/styles/colors.module';
+
+.report {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  padding: 4rem 0;
+  width: 100%;
+}

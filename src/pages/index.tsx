@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import Logo from '/public/sample-logo.svg'
 import Image from 'next/image'
+import Logo from '/public/sample-logo.svg'
 
 import { Navbar } from '../layouts/Navbar'
 import { Footer } from '../layouts/Footer'
@@ -64,14 +64,6 @@ const Home: NextPage = () => {
           </GridCell>
           <GridCell responsive>
             <Image src="/fly.jpg" width={1200} height={800} alt="" />
-          </GridCell>
-        </Grid>
-        <Grid gap="big">
-          <GridCell responsive>
-            <p>This is grid element 1</p>
-          </GridCell>
-          <GridCell responsive>
-            <p>This is grid element 2</p>
           </GridCell>
         </Grid>
         <Grid gap="big" direction="column">

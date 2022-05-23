@@ -1,0 +1,16 @@
+@import '../IncidentReportSteps.module';
+
+.step {
+  @extend %step;
+}
+.navigation {
+  @extend %navigation;
+}
+
+.back {
+  @extend %back;
+}
+
+.continue {
+  @extend %continue;
+}
