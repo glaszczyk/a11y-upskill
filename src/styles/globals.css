@@ -1,9 +1,19 @@
-html,
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 400;
+  src: url('/Roboto/Roboto-Regular.ttf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 700;
+  src: url('/Roboto/Roboto-Bold.ttf') format('opentype');
+}
+
 body {
   padding: 0;
   margin: 0;
-  font-family: Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 a {
