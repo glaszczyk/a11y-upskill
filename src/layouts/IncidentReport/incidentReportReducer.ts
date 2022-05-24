@@ -110,6 +110,8 @@ export const incidentReportReducer = (
       return addExpense(state, action.payload)
     case 'proceedToIncidentDetails':
       return { ...state, step: 'INCIDENT_DETAILS' }
+    case 'returnToIncidentDetails':
+      return { ...state, step: 'INCIDENT_DETAILS' }
     case 'returnToPersonalDetails':
       return { ...state, step: 'PERSONAL_DETAILS' }
     case 'proceedToExpenseReport':
