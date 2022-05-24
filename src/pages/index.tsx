@@ -33,7 +33,9 @@ const Home: NextPage = () => {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </p>
-          <Button variant="primary">Order Now</Button>
+          <Button variant="primary" onClick={() => null}>
+            Order Now
+          </Button>
         </Slide>
         <Grid gap="big">
           <GridCell responsive>
@@ -108,8 +110,12 @@ const Home: NextPage = () => {
             <p>Contact us to order</p>
           </GridCell>
           <GridCell responsive justify="space-between" direction="row">
-            <Button variant="secondary">Send a Message </Button>
-            <Button variant="primary">Call Us</Button>
+            <Button variant="secondary" onClick={() => null}>
+              Send a Message{' '}
+            </Button>
+            <Button variant="primary" onClick={() => null}>
+              Call Us
+            </Button>
           </GridCell>
         </Grid>
       </Main>
