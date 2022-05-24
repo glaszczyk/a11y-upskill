@@ -1,0 +1,58 @@
+@import '/src/styles/mediaQuery.module';
+@import '/src/styles/colors.module';
+@import '../../../IncidentReportSteps.module';
+
+.modalBackground {
+  background-color: $black;
+  height: 100%;
+  left: 0;
+  opacity: 0.6;
+  overflow: auto;
+  overscroll-behavior: contain;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.dialog {
+  align-items: center;
+  background-color: $white;
+  border: 1px solid $darkGray;
+  box-shadow: $darkGray 0 0 15px 0px;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  left: 50%;
+  max-height: 100%;
+  max-width: 100%;
+  padding: 1rem;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  z-index: 101;
+  @include min-small {
+    height: 400px;
+    width: 400px;
+  }
+  @include min-medium {
+    width: 600px;
+  }
+}
+
+.content {
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.close {
+  align-self: flex-end;
+}
+
+.navigation {
+  @extend %navigation;
+}

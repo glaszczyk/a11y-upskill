@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import Logo from '/public/sample-logo.svg'
 import Image from 'next/image'
+import Logo from '/public/sample-logo.svg'
 
 import { Navbar } from '../layouts/Navbar'
 import { Footer } from '../layouts/Footer'
@@ -33,7 +33,9 @@ const Home: NextPage = () => {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </p>
-          <Button variant="primary">Order Now</Button>
+          <Button variant="primary" onClick={() => null}>
+            Order Now
+          </Button>
         </Slide>
         <Grid gap="big">
           <GridCell responsive>
@@ -64,14 +66,6 @@ const Home: NextPage = () => {
           </GridCell>
           <GridCell responsive>
             <Image src="/fly.jpg" width={1200} height={800} alt="" />
-          </GridCell>
-        </Grid>
-        <Grid gap="big">
-          <GridCell responsive>
-            <p>This is grid element 1</p>
-          </GridCell>
-          <GridCell responsive>
-            <p>This is grid element 2</p>
           </GridCell>
         </Grid>
         <Grid gap="big" direction="column">
@@ -116,8 +110,12 @@ const Home: NextPage = () => {
             <p>Contact us to order</p>
           </GridCell>
           <GridCell responsive justify="space-between" direction="row">
-            <Button variant="secondary">Send a Message </Button>
-            <Button variant="primary">Call Us</Button>
+            <Button variant="secondary" onClick={() => null}>
+              Send a Message{' '}
+            </Button>
+            <Button variant="primary" onClick={() => null}>
+              Call Us
+            </Button>
           </GridCell>
         </Grid>
       </Main>

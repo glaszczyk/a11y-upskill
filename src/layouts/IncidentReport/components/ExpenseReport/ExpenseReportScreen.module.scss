@@ -1,0 +1,57 @@
+@import '/src/styles/mediaQuery.module';
+@import '/src/styles/colors.module';
+@import '../IncidentReportSteps.module';
+
+.step {
+  @extend %step;
+}
+.navigation {
+  @extend %navigation;
+}
+
+.back {
+  @extend %back;
+}
+
+.continue {
+  @extend %continue;
+}
+
+.expenses {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 100%;
+}
+.expense {
+  align-items: center;
+  display: flex;
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.cost {
+  display: inline-block;
+  font-weight: bold;
+  width: 50px;
+  padding-right: 1rem;
+  text-align: right;
+}
+
+.description {
+  display: inline-block;
+  flex: 1 1 0;
+}
+
+.expenseIcon {
+  background-color: #ccc;
+  border-radius: 100%;
+  height: 50px;
+  margin-left: 1rem;
+  width: 50px;
+}
+
+.addExpense {
+  align-self: flex-end;
+  margin: 1rem 0 2rem;
+}
