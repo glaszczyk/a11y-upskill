@@ -15,7 +15,7 @@ export type IncidentDetails = {
   incidentDescription: string
 }
 
-export type ExpenseReport = Expense[]
+export type Expenses = Expense[]
 
 export type ReportStep =
   | 'PERSONAL_DETAILS'
@@ -81,5 +81,5 @@ export type ReportState = {
   step: ReportStep
   personalDetails: PersonalDetails
   incidentDetails: IncidentDetails
-  expenseReport: ExpenseReport
+  expenseReport: Expenses
 }

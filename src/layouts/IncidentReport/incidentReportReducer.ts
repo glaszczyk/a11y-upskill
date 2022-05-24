@@ -1,6 +1,6 @@
 import {
   Expense,
-  ExpenseReport,
+  Expenses,
   IncidentDetailsDispatchAction,
   PersonalDetailsDispatchAction,
   ReportDispatchAction,
@@ -39,9 +39,9 @@ const setIncidentDetails = (
   }
 }
 
-const manageExpenseOperation = (
+const updateExpenseReport = (
   state: ReportState,
-  expenseReport: ExpenseReport
+  expenseReport: Expenses
 ): ReportState => {
   return {
     ...state,
@@ -54,8 +54,29 @@ const removeExpense = (state: ReportState, expenseFound: Expense) => {
   const filteredExpenseReport = expenseReport.filter(
     (expense: Expense) => expense.id !== expenseFound.id
   )
-  return manageExpenseOperation(state, filteredExpenseReport)
+  return updateExpenseReport(state, filteredExpenseReport)
 }
+
+const addExpense = (state: ReportState, newExpense: Expense) => {
+  const { expenseReport } = state
+  const existingExpense = expenseReport.some(
+    (expense: Expense) => expense.id === newExpense.id
+  )
+
+  const newExpenses = (): Expenses => {
+    if (existingExpense) {
+      return expenseReport.reduce((acc: Expenses, current: Expense) => {
+        return current.id === newExpense.id
+          ? [...acc, newExpense]
+          : [...acc, current]
+      }, [] as Expenses)
+    }
+    return [...expenseReport, newExpense]
+  }
+
+  return updateExpenseReport(state, newExpenses())
+}
+
 export const incidentReportReducer = (
   state: ReportState,
   action: ReportDispatchAction
@@ -85,6 +106,8 @@ export const incidentReportReducer = (
       return setIncidentDetails(state, 'incidentDescription', action)
     case 'removeExpense':
       return removeExpense(state, action.payload)
+    case 'addExpense':
+      return addExpense(state, action.payload)
     case 'proceedToIncidentDetails':
       return { ...state, step: 'INCIDENT_DETAILS' }
     case 'returnToPersonalDetails':

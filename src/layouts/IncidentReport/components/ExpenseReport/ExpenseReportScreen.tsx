@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { FormEvent, useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import styles from './ExpenseReportScreen.module.scss'
@@ -8,9 +8,13 @@ import { Expense, ExpenseReportAction } from '../../types'
 import DeleteIcon from '/public/trash.svg'
 import EditIcon from '/public/pencil.svg'
 import { ExpenseDialog } from './components/ExpenseDialog'
+import { v4 as uuidv4 } from 'uuid'
+
+const defaultExpense: Expense = { id: '', cost: '', description: '' }
 
 export const ExpenseReportScreen = () => {
   const [dialogDisplayed, setDialogDisplayed] = useState(false)
+  const [expenseItem, setExpenseItem] = useState(defaultExpense)
 
   const {
     state: { expenseReport },
@@ -23,6 +27,38 @@ export const ExpenseReportScreen = () => {
       payload: value,
     })
 
+  const handleEdit = (expense: Expense) => {
+    setExpenseItem(expense)
+    setDialogDisplayed(true)
+  }
+
+  const handleCostChange = (e: FormEvent<HTMLInputElement>) => {
+    const updatedExpense = { ...expenseItem, cost: e.currentTarget.value }
+    setExpenseItem(updatedExpense)
+  }
+
+  const handleDialogClose = () => {
+    setDialogDisplayed(false)
+    setExpenseItem(defaultExpense)
+  }
+
+  const handleAddNewExpense = () => {
+    setExpenseItem({ ...defaultExpense, id: uuidv4() })
+    setDialogDisplayed(true)
+  }
+  const handleDescriptionChange = (e: FormEvent<HTMLInputElement>) => {
+    const updatedExpense = {
+      ...expenseItem,
+      description: e.currentTarget.value,
+    }
+    setExpenseItem(updatedExpense)
+  }
+
+  const handleSubmitExpense = () => {
+    setDialogDisplayed(false)
+    handleDispatch('addExpense', expenseItem)
+    setExpenseItem(defaultExpense)
+  }
   const getExpenses = (expenses: Expense[]) => (
     <ol className={styles.expenses}>
       {expenses.map((expense) => (
@@ -44,9 +80,7 @@ export const ExpenseReportScreen = () => {
           <Button
             variant="icon"
             className={styles.expenseIcon}
-            onClick={() => {
-              setDialogDisplayed(true)
-            }}
+            onClick={() => handleEdit(expense)}
           >
             <Image src={EditIcon} width={44} height={44} alt="Edit expense" />
           </Button>
@@ -55,16 +89,16 @@ export const ExpenseReportScreen = () => {
     </ol>
   )
 
-  const displayExpenseDialog = (expense?: Expense) => {
+  const displayExpenseDialog = (expense: Expense) => {
     return (
       dialogDisplayed && (
-        <>
-          <div className={styles.modalBackground}></div>
-          <ExpenseDialog
-            expense={expense}
-            onClose={() => setDialogDisplayed(false)}
-          />
-        </>
+        <ExpenseDialog
+          expense={expense}
+          onClose={handleDialogClose}
+          onSubmit={handleSubmitExpense}
+          onCostChange={(e) => handleCostChange(e)}
+          onDescriptionChange={(e) => handleDescriptionChange(e)}
+        />
       )
     )
   }
@@ -76,12 +110,12 @@ export const ExpenseReportScreen = () => {
 
   return (
     <fieldset className={styles.step}>
-      {displayExpenseDialog()}
+      {displayExpenseDialog(expenseItem)}
       {getExpenses(expenseReport)}
       <Button
         variant="link-like"
         className={styles.addExpense}
-        onClick={() => setDialogDisplayed(true)}
+        onClick={handleAddNewExpense}
       >
         + Add another expense
       </Button>

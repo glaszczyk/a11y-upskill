@@ -1,5 +1,19 @@
 @import '/src/styles/mediaQuery.module';
 @import '/src/styles/colors.module';
+@import '../../../IncidentReportSteps.module';
+
+.modalBackground {
+  background-color: $black;
+  height: 100%;
+  left: 0;
+  opacity: 0.6;
+  overflow: auto;
+  overscroll-behavior: contain;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
 
 .dialog {
   align-items: center;
@@ -37,4 +51,8 @@
 
 .close {
   align-self: flex-end;
+}
+
+.navigation {
+  @extend %navigation;
 }
