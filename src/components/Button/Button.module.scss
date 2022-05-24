@@ -24,12 +24,27 @@
   }
 }
 
-.primary {
+.primary-button {
   @extend %baseButton;
   background-color: $primaryColor;
 }
 
-.secondary {
+.secondary-button {
   @extend %baseButton;
   background-color: $secondaryColor;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+}
+
+.link-like-button {
+  background-color: transparent;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem;
 }

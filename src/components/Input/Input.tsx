@@ -23,6 +23,7 @@ export const Input = ({
       </label>
       <input
         className={styles.input}
+        id={name}
         name={name}
         type={type}
         value={value}

@@ -25,6 +25,7 @@ export const TextArea = ({
       </label>
       <textarea
         className={styles.textarea}
+        id={name}
         name={name}
         value={value}
         rows={rows}

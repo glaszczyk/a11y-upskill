@@ -29,6 +29,7 @@ export type TravelPurpose =
   | 'high-risk sport'
 
 export type Expense = {
+  id: string
   cost: string
   description: string
 }
@@ -58,9 +59,10 @@ export type ExpenseReportAction =
   | 'returnToIncidentDetails'
   | 'submitReport'
 
-export type ReportAction = PersonalDetailsAction &
-  IncidentDetailsAction &
-  ExpenseReportAction
+export type ReportDispatchAction =
+  | PersonalDetailsDispatchAction
+  | IncidentDetailsDispatchAction
+  | ExpenseReportDispatchAction
 
 export type PersonalDetailsDispatchAction = {
   type: PersonalDetailsAction
@@ -72,7 +74,7 @@ export type IncidentDetailsDispatchAction = {
 }
 export type ExpenseReportDispatchAction = {
   type: ExpenseReportAction
-  payload?: string
+  payload: Expense
 }
 
 export type ReportState = {

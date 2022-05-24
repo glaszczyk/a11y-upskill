@@ -1,7 +1,9 @@
 import {
+  Expense,
+  ExpenseReport,
   IncidentDetailsDispatchAction,
   PersonalDetailsDispatchAction,
-  ReportAction,
+  ReportDispatchAction,
   ReportState,
 } from './types'
 
@@ -37,9 +39,26 @@ const setIncidentDetails = (
   }
 }
 
+const manageExpenseOperation = (
+  state: ReportState,
+  expenseReport: ExpenseReport
+): ReportState => {
+  return {
+    ...state,
+    expenseReport: [...expenseReport],
+  }
+}
+
+const removeExpense = (state: ReportState, expenseFound: Expense) => {
+  const { expenseReport } = state
+  const filteredExpenseReport = expenseReport.filter(
+    (expense: Expense) => expense.id !== expenseFound.id
+  )
+  return manageExpenseOperation(state, filteredExpenseReport)
+}
 export const incidentReportReducer = (
   state: ReportState,
-  action: { type: ReportAction; payload: string }
+  action: ReportDispatchAction
 ): ReportState => {
   switch (action.type) {
     case 'changeFirstName':
@@ -64,6 +83,8 @@ export const incidentReportReducer = (
       return setIncidentDetails(state, 'date', action)
     case 'changeIncidentDescription':
       return setIncidentDetails(state, 'incidentDescription', action)
+    case 'removeExpense':
+      return removeExpense(state, action.payload)
     case 'proceedToIncidentDetails':
       return { ...state, step: 'INCIDENT_DETAILS' }
     case 'returnToPersonalDetails':
