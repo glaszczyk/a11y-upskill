@@ -1,9 +1,11 @@
-import styles from './PersonalDetailsScreen.module.scss'
-import { FormEvent, useContext } from 'react'
+import { useContext } from 'react'
+
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext } from '../../IncidentReport'
 import { PersonalDetailsAction } from '../../types'
 import { Input } from '../../../../components/Input'
+
+import styles from './PersonalDetailsScreen.module.scss'
 
 export const PersonalDetailsScreen = () => {
   const {
@@ -12,10 +14,10 @@ export const PersonalDetailsScreen = () => {
   } = useContext(IncidentReportContext)
 
   const handleDispatch =
-    (actionName: PersonalDetailsAction) => (e: FormEvent<HTMLInputElement>) =>
+    (actionName: PersonalDetailsAction) => (value: string) =>
       dispatch({
         type: actionName,
-        payload: e.currentTarget.value,
+        payload: value,
       })
 
   return (

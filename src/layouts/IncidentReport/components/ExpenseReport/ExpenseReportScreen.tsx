@@ -1,4 +1,5 @@
 import { FormEvent, useContext, useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import Image from 'next/image'
 
 import styles from './ExpenseReportScreen.module.scss'
@@ -8,7 +9,6 @@ import { Expense, ExpenseReportAction } from '../../types'
 import DeleteIcon from '/public/trash.svg'
 import EditIcon from '/public/pencil.svg'
 import { ExpenseDialog } from './components/ExpenseDialog'
-import { v4 as uuidv4 } from 'uuid'
 
 const defaultExpense: Expense = { id: '', cost: '', description: '' }
 

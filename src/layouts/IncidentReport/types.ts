@@ -24,7 +24,7 @@ export type ReportStep =
 
 export type TravelPurpose =
   | 'tourism'
-  | 'study/mental work'
+  | 'study / mental work'
   | 'physical work'
   | 'high-risk sport'
 
@@ -83,3 +83,7 @@ export type ReportState = {
   incidentDetails: IncidentDetails
   expenseReport: Expenses
 }
+
+type RadioButton = { label: string; value: string; checked?: boolean }
+
+export type RadioButtons = RadioButton[]

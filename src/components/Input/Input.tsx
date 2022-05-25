@@ -7,7 +7,7 @@ type InputPropTypes = {
   label: string
   type: 'text' | 'email'
   value: string
-  onChange: (e: FormEvent<HTMLInputElement>) => void
+  onChange: (value: string) => void
 }
 export const Input = ({
   type = 'text',
@@ -16,6 +16,9 @@ export const Input = ({
   name,
   value,
 }: InputPropTypes) => {
+  const handleChange = (e: FormEvent<HTMLInputElement>) =>
+    onChange(e.currentTarget.value)
+
   return (
     <div className={styles.inputWrapper}>
       <label className={styles.label} htmlFor={name}>
@@ -27,7 +30,7 @@ export const Input = ({
         name={name}
         type={type}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
