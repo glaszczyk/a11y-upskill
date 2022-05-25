@@ -1,5 +1,3 @@
-import { FormEvent } from 'react'
-
 import { Button } from '../../../../../../components/Button'
 import { Expense } from '../../../../types'
 import { Input } from '../../../../../../components/Input'
@@ -9,8 +7,8 @@ import styles from './ExpenseDialog.module.scss'
 type ExpenseDialogPropTypes = {
   expense: Expense
   onClose: () => void
-  onCostChange: (e: FormEvent<HTMLInputElement>) => void
-  onDescriptionChange: (e: FormEvent<HTMLInputElement>) => void
+  onCostChange: (value: string) => void
+  onDescriptionChange: (value: string) => void
   onSubmit: () => void
 }
 export const ExpenseDialog = ({

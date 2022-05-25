@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Image from 'next/image'
 
@@ -32,8 +32,8 @@ export const ExpenseReportScreen = () => {
     setDialogDisplayed(true)
   }
 
-  const handleCostChange = (e: FormEvent<HTMLInputElement>) => {
-    const updatedExpense = { ...expenseItem, cost: e.currentTarget.value }
+  const handleCostChange = (value: string) => {
+    const updatedExpense = { ...expenseItem, cost: value }
     setExpenseItem(updatedExpense)
   }
 
@@ -46,10 +46,10 @@ export const ExpenseReportScreen = () => {
     setExpenseItem({ ...defaultExpense, id: uuidv4() })
     setDialogDisplayed(true)
   }
-  const handleDescriptionChange = (e: FormEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (value: string) => {
     const updatedExpense = {
       ...expenseItem,
-      description: e.currentTarget.value,
+      description: value,
     }
     setExpenseItem(updatedExpense)
   }
