@@ -1,10 +1,13 @@
-import styles from './IncidentDetailsScreen.module.scss'
-import { Button } from '../../../../components/Button'
 import { FormEvent, useContext } from 'react'
+
+import { Button } from '../../../../components/Button'
 import { IncidentReportContext } from '../../IncidentReport'
 import { TextArea } from '../../../../components/TextArea'
-import { IncidentDetailsAction } from '../../types'
+import { IncidentDetailsAction, RadioButtons } from '../../types'
 import { Input } from '../../../../components/Input'
+import { RadioGroup } from '../../../../components/RadioGroup'
+
+import styles from './IncidentDetailsScreen.module.scss'
 
 export const IncidentDetailsScreen = () => {
   const {
@@ -13,19 +16,25 @@ export const IncidentDetailsScreen = () => {
   } = useContext(IncidentReportContext)
 
   const handleDispatch =
-    (actionName: IncidentDetailsAction) => (e: FormEvent<HTMLInputElement>) =>
+    (actionName: IncidentDetailsAction) => (value: string) =>
       dispatch({
         type: actionName,
-        payload: e.currentTarget.value,
+        payload: value,
       })
+
+  const radioButtons: RadioButtons = [
+    { label: 'tourism', value: 'tourism', checked: true },
+    { label: 'study / mental work', value: 'study / mental work' },
+    { value: 'physical work', label: 'physical work' },
+    { value: 'high-risk sport', label: 'high-risk sport' },
+  ]
 
   return (
     <fieldset className={styles.step}>
-      <Input
-        name="travelPurpose"
+      <RadioGroup
         label="Purpose of Travel"
-        type="text"
-        value={incidentDetails.travelPurpose}
+        groupName="travelPurpose"
+        buttons={radioButtons}
         onChange={handleDispatch('changeTravelPurpose')}
       />
       <Input
