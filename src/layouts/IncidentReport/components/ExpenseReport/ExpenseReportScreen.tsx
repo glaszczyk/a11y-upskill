@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import styles from './ExpenseReportScreen.module.scss'
 import { Button } from '../../../../components/Button'
-import { IncidentReportContext } from '../../IncidentReport'
+import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { Expense, ExpenseReportAction } from '../../types'
 import DeleteIcon from '/public/trash.svg'
 import EditIcon from '/public/pencil.svg'
@@ -12,7 +12,13 @@ import { ExpenseDialog } from './components/ExpenseDialog'
 
 const defaultExpense: Expense = { id: '', cost: '', description: '' }
 
-export const ExpenseReportScreen = () => {
+type ExpenseReportScreenPropTypes = {
+  labelledBy: StepConfigItem
+}
+
+export const ExpenseReportScreen = ({
+  labelledBy,
+}: ExpenseReportScreenPropTypes) => {
   const [dialogDisplayed, setDialogDisplayed] = useState(false)
   const [expenseItem, setExpenseItem] = useState(defaultExpense)
 
@@ -109,7 +115,7 @@ export const ExpenseReportScreen = () => {
   }, [dialogDisplayed])
 
   return (
-    <fieldset className={styles.step}>
+    <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
       {displayExpenseDialog(expenseItem)}
       {getExpenses(expenseReport)}
       <Button
