@@ -1,7 +1,7 @@
 import { FormEvent, useContext } from 'react'
 
 import { Button } from '../../../../components/Button'
-import { IncidentReportContext } from '../../IncidentReport'
+import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { TextArea } from '../../../../components/TextArea'
 import { IncidentDetailsAction, RadioButtons } from '../../types'
 import { Input } from '../../../../components/Input'
@@ -9,7 +9,13 @@ import { RadioGroup } from '../../../../components/RadioGroup'
 
 import styles from './IncidentDetailsScreen.module.scss'
 
-export const IncidentDetailsScreen = () => {
+type PersonalDetailsScreenPropTypes = {
+  labelledBy: StepConfigItem
+}
+
+export const IncidentDetailsScreen = ({
+  labelledBy,
+}: PersonalDetailsScreenPropTypes) => {
   const {
     state: { incidentDetails },
     dispatch,
@@ -30,7 +36,7 @@ export const IncidentDetailsScreen = () => {
   ]
 
   return (
-    <fieldset className={styles.step}>
+    <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
       <RadioGroup
         label="Purpose of Travel"
         groupName="travelPurpose"

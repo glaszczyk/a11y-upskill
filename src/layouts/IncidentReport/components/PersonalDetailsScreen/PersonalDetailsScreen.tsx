@@ -1,13 +1,19 @@
 import { useContext } from 'react'
 
 import { Button } from '../../../../components/Button'
-import { IncidentReportContext } from '../../IncidentReport'
+import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { PersonalDetailsAction } from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './PersonalDetailsScreen.module.scss'
 
-export const PersonalDetailsScreen = () => {
+type PersonalDetailsScreenPropTypes = {
+  labelledBy: StepConfigItem
+}
+
+export const PersonalDetailsScreen = ({
+  labelledBy,
+}: PersonalDetailsScreenPropTypes) => {
   const {
     state: { personalDetails },
     dispatch,
@@ -21,7 +27,7 @@ export const PersonalDetailsScreen = () => {
       })
 
   return (
-    <fieldset className={styles.step}>
+    <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
       <Input
         name="firstName"
         label="First Name"
