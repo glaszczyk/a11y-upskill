@@ -60,9 +60,10 @@ export const IncidentDetailsScreen = ({
       <Input
         name="date"
         label="Date"
-        type="text"
+        type="date"
         value={incidentDetails.date}
         onChange={handleDispatch('changeDate')}
+        className={styles.dateInput}
       />
       <TextArea
         name="incidentDescription"

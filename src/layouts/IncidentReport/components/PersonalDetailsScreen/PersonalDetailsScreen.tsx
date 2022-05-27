@@ -45,9 +45,10 @@ export const PersonalDetailsScreen = ({
       <Input
         name="birthday"
         label="Birthday"
-        type="text"
+        type="date"
         value={personalDetails.birthday}
         onChange={handleDispatch('changeBirthday')}
+        className={styles.dateInput}
       />
       <Input
         name="phone"
