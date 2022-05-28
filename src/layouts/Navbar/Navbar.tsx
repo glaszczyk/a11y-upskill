@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export const Navbar = () => {
   return (
-    <nav className={styles.container}>
+    <header className={styles.container}>
       <Link href="/">
         <a>
           <Image
@@ -18,28 +18,30 @@ export const Navbar = () => {
           />
         </a>
       </Link>
-      <ul className={styles.menu} role="menubar">
-        <li role="menuitem" className={styles.menuItem}>
-          <Link href="/insurance">
-            <a>Insurance</a>
-          </Link>
-        </li>
-        <li role="menuitem" className={styles.menuItem}>
-          <Link href="/about-us">
-            <a>About us</a>
-          </Link>
-        </li>
-        <li role="menuitem" className={styles.menuItem}>
-          <Link href="/claim-report">
-            <a>Claim report</a>
-          </Link>
-        </li>
-        <li role="menuitem" className={styles.menuItem}>
-          <Link href="/contact">
-            <a>Contact</a>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+      <nav aria-label="Main Menu">
+        <ul className={styles.menu} role="menubar">
+          <li role="menuitem" className={styles.menuItem}>
+            <Link href="/insurance">
+              <a>Insurance</a>
+            </Link>
+          </li>
+          <li role="menuitem" className={styles.menuItem}>
+            <Link href="/about-us">
+              <a>About us</a>
+            </Link>
+          </li>
+          <li role="menuitem" className={styles.menuItem}>
+            <Link href="/claim-report">
+              <a>Claim report</a>
+            </Link>
+          </li>
+          <li role="menuitem" className={styles.menuItem}>
+            <Link href="/contact">
+              <a>Contact</a>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
   )
 }
