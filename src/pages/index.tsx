@@ -21,12 +21,13 @@ const Home: NextPage = () => {
       <Navbar />
       <Main>
         <Slide
+          labelledBy="travel-title"
           backgroundImage={{
             url: '/jakob-owens-MctEgCk1Dm0-unsplash.jpg',
             position: 'center bottom',
           }}
         >
-          <h1>Travel Insurance</h1>
+          <h1 id="travel-title">Travel Insurance</h1>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -37,12 +38,14 @@ const Home: NextPage = () => {
             Order Now
           </Button>
         </Slide>
-        <Grid gap="big">
+        <Grid gap="big" labelledBy="insurance-for-international-visitors">
           <GridCell responsive>
             <Image src="/emergency.jpg" width={1200} height={800} alt="" />
           </GridCell>
           <GridCell responsive>
-            <h2>Insurance for International Visitors</h2>
+            <h2 id="insurance-for-international-visitors">
+              Insurance for International Visitors
+            </h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -54,9 +57,9 @@ const Home: NextPage = () => {
             </ol>
           </GridCell>
         </Grid>
-        <Grid gap="big">
+        <Grid gap="big" labelledBy="safe-travels">
           <GridCell responsive>
-            <h2>Safe Travels</h2>
+            <h2 id="safe-travels">Safe Travels</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -68,9 +71,13 @@ const Home: NextPage = () => {
             <Image src="/fly.jpg" width={1200} height={800} alt="" />
           </GridCell>
         </Grid>
-        <Grid gap="big" direction="column">
+        <Grid
+          gap="big"
+          direction="column"
+          labelledBy="explore-our-travel-topics"
+        >
           <GridCell responsive={false} justify="center" direction="row">
-            <h2>Explore Our Travel Topics</h2>
+            <h2 id="explore-our-travel-topics">Explore Our Travel Topics</h2>
           </GridCell>
           <GridCellOfFour responsive direction="row">
             <Blogpost title="Renting Vacation Homes" imageSrc="/desert1.jpg" />
@@ -90,6 +97,7 @@ const Home: NextPage = () => {
             url: '/testimonial-background.jpg',
             position: 'center center',
           }}
+          label="testimonials"
         >
           <h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -104,9 +112,11 @@ const Home: NextPage = () => {
           />
           <p>Donald Duck, CEO of Disney</p>
         </Testimonial>
-        <Grid gap="big">
+        <Grid gap="big" labelledBy="are-you-looking-for-an-insurance">
           <GridCell responsive>
-            <h2>Are you looking for an insurance?</h2>
+            <h2 id="are-you-looking-for-an-insurance">
+              Are you looking for an insurance?
+            </h2>
             <p>Contact us to order</p>
           </GridCell>
           <GridCell responsive justify="space-between" direction="row">

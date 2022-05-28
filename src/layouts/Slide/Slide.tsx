@@ -7,9 +7,14 @@ type SlidePropTypes = {
     position?: string
   }
   children: React.ReactNode | React.ReactNode[]
+  labelledBy?: string
 }
 
-export const Slide = ({ backgroundImage, children }: SlidePropTypes) => {
+export const Slide = ({
+  backgroundImage,
+  children,
+  labelledBy,
+}: SlidePropTypes) => {
   const style = {
     backgroundImage: `url(${backgroundImage.url})`,
     backgroundPosition: backgroundImage.position
@@ -17,7 +22,15 @@ export const Slide = ({ backgroundImage, children }: SlidePropTypes) => {
       : 'center center',
   }
 
-  return (
+  return labelledBy ? (
+    <section
+      className={styles.slide}
+      style={style}
+      aria-labelledby={labelledBy}
+    >
+      <div className={styles.container}>{children}</div>
+    </section>
+  ) : (
     <div className={styles.slide} style={style}>
       <div className={styles.container}>{children}</div>
     </div>
