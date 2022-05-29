@@ -1,4 +1,6 @@
 @import '/src/styles/mediaQuery.module';
+@import '/src/components/Button/Button.module';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -30,4 +32,16 @@
 }
 
 .logo {
+}
+
+.buttonLikeLinkPrimary {
+  @extend %baseButton;
+  background-color: $primaryColor;
+  text-align: center;
+}
+
+.buttonLikeLinkSecondary {
+  @extend %baseButton;
+  background-color: $secondaryColor;
+  text-align: center;
 }
