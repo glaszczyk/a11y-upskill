@@ -14,6 +14,7 @@ import { Testimonial } from '../layouts/Testimonial'
 import styles from '../layouts/Navbar/Navbar.module.scss'
 import { GridCellOfFour } from '../components/GridCellOfFour'
 import { Blogpost } from '../components/Blogpost'
+import Link from 'next/link'
 
 const Home: NextPage = () => {
   return (
@@ -80,15 +81,25 @@ const Home: NextPage = () => {
             <h2 id="explore-our-travel-topics">Explore Our Travel Topics</h2>
           </GridCell>
           <GridCellOfFour responsive direction="row">
-            <Blogpost title="Renting Vacation Homes" imageSrc="/desert1.jpg" />
             <Blogpost
-              title="Popular Travel Destinations fof 2021"
-              imageSrc="/desert2.jpg"
+              title="Renting Vacation Homes"
+              imageSrc="/desert1.jpg"
+              href="./renting-vacation-homes"
             />
-            <Blogpost title="Trends & Predictions" imageSrc="/airport1.jpg" />
+            <Blogpost
+              title="Popular Travel Destinations for 2021"
+              imageSrc="/desert2.jpg"
+              href="./popular-travel-destinations-2021"
+            />
+            <Blogpost
+              title="Trends & Predictions"
+              imageSrc="/airport1.jpg"
+              href="./trends-predictions"
+            />
             <Blogpost
               title="Travel Gear for Safe Travels in 2021"
               imageSrc="/airport2.jpg"
+              href="./travel-gear-2021"
             />
           </GridCellOfFour>
         </Grid>
@@ -120,12 +131,12 @@ const Home: NextPage = () => {
             <p>Contact us to order</p>
           </GridCell>
           <GridCell responsive justify="space-between" direction="row">
-            <Button variant="secondary" onClick={() => null}>
-              Send a Message{' '}
-            </Button>
-            <Button variant="primary" onClick={() => null}>
-              Call Us
-            </Button>
+            <p className={styles.buttonLikeLinkSecondary}>
+              <Link href="./contact">Send a message</Link>
+            </p>
+            <p className={styles.buttonLikeLinkPrimary}>
+              <Link href="./contact">Call Us</Link>
+            </p>
           </GridCell>
         </Grid>
       </Main>
