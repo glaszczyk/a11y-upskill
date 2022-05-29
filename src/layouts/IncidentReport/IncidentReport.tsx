@@ -12,12 +12,12 @@ import { FormStep } from '../../components/FormStep'
 const defaultState: ReportState = {
   step: 'PERSONAL_DETAILS',
   personalDetails: {
-    firstName: '',
-    secondName: '',
-    birthday: '',
-    email: '',
-    phone: '',
-    policyNo: '',
+    firstName: { value: '', error: '' },
+    secondName: { value: '', error: '' },
+    birthday: { value: '', error: '' },
+    email: { value: '', error: '' },
+    phone: { value: '', error: '' },
+    policyNo: { value: '', error: '' },
   },
   incidentDetails: {
     country: '',

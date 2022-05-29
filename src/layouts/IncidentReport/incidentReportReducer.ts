@@ -15,7 +15,7 @@ const setPersonalDetails = (
   const { personalDetails } = state
   const updatedPersonalDetails = {
     ...personalDetails,
-    [key]: payload,
+    [key]: { ...payload },
   }
   return {
     ...state,

@@ -1,10 +1,10 @@
 export type PersonalDetails = {
-  firstName: string
-  secondName: string
-  birthday: string
-  phone: string
-  email: string
-  policyNo: string
+  firstName: ValueWithError<string>
+  secondName: ValueWithError<string>
+  birthday: ValueWithError<string>
+  phone: ValueWithError<string>
+  email: ValueWithError<string>
+  policyNo: ValueWithError<string>
 }
 
 export type IncidentDetails = {
@@ -14,7 +14,10 @@ export type IncidentDetails = {
   date: string
   incidentDescription: string
 }
-
+export type ValueWithError<T> = {
+  value: T
+  error?: string
+}
 export type Expenses = Expense[]
 
 export type ReportStep =
@@ -66,7 +69,7 @@ export type ReportDispatchAction =
 
 export type PersonalDetailsDispatchAction = {
   type: PersonalDetailsAction
-  payload?: string
+  payload?: ValueWithError<string | number>
 }
 export type IncidentDetailsDispatchAction = {
   type: IncidentDetailsAction
