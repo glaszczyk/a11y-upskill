@@ -27,11 +27,13 @@
 .primary-button {
   @extend %baseButton;
   background-color: $primaryColor;
+  color: $white;
+  font-weight: bold;
 }
 
 .secondary-button {
   @extend %baseButton;
-  background-color: $secondaryColor;
+  border: 2px solid $primaryColor;
 }
 
 .icon-button {

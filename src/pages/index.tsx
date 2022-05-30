@@ -15,6 +15,7 @@ import styles from '../layouts/Navbar/Navbar.module.scss'
 import { GridCellOfFour } from '../components/GridCellOfFour'
 import { Blogpost } from '../components/Blogpost'
 import Link from 'next/link'
+import slideStyles from '/src/layouts/Slide/Slide.module.scss'
 
 const Home: NextPage = () => {
   return (
@@ -28,8 +29,10 @@ const Home: NextPage = () => {
             position: 'center bottom',
           }}
         >
-          <h1 id="travel-title">Travel Insurance</h1>
-          <p>
+          <h1 id="travel-title" className={slideStyles.slideTitle}>
+            Travel Insurance
+          </h1>
+          <p className={slideStyles.slideBody}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
