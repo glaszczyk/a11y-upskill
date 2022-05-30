@@ -9,11 +9,12 @@ import { Expense, ExpenseReportAction } from '../../types'
 import DeleteIcon from '/public/trash.svg'
 import EditIcon from '/public/pencil.svg'
 import { ExpenseDialog } from '../ExpenseDialog'
+import classnames from 'classnames'
 
 const defaultExpense: Expense = {
   id: '',
   cost: { value: '', error: '' },
-  description: { value: '' },
+  description: { value: '', error: '' },
 }
 
 type ExpenseReportScreenPropTypes = {
@@ -48,6 +49,12 @@ export const ExpenseReportScreen = ({
     setExpenseItem(updatedExpense)
   }
 
+  const handleError = (key: 'cost' | 'description', error: string) => {
+    const updatedValue = { ...expenseItem[key], error }
+    const updatedExpense = { ...expenseItem, [key]: updatedValue }
+    setExpenseItem(updatedExpense)
+  }
+
   const handleDialogClose = () => {
     setDialogDisplayed(false)
     setExpenseItem(defaultExpense)
@@ -63,10 +70,22 @@ export const ExpenseReportScreen = ({
     handleDispatch('addExpense', expenseItem)
     setExpenseItem(defaultExpense)
   }
+
+  const submitReport = () => {
+    console.log('Submitted')
+    dispatch({ type: 'resetState' })
+  }
+
   const getExpenses = (expenses: Expense[]) => (
     <ol className={styles.expenses}>
       {expenses.map((expense) => (
-        <li key={expense.id} className={styles.expense}>
+        <li
+          key={expense.id}
+          className={classnames(
+            styles.expense,
+            expense.cost.error ? styles.error : null
+          )}
+        >
           <span className={styles.cost}>{expense.cost.value}</span>
           <span className={styles.description}>
             {expense.description.value}
@@ -103,9 +122,19 @@ export const ExpenseReportScreen = ({
           onClose={handleDialogClose}
           onSubmit={handleSubmitExpense}
           onChange={handleValueChange}
+          onBlur={handleError}
         />
       )
     )
+  }
+
+  const getErrorNotification = () => {
+    const expensesWithError = expenseReport.reduce((acc, current) => {
+      return !!(current.cost.error || current.description.error || acc)
+    }, false)
+    return expensesWithError ? (
+      <p role="alert">Some expenses contain errors.</p>
+    ) : null
   }
 
   useEffect(() => {
@@ -117,6 +146,7 @@ export const ExpenseReportScreen = ({
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
       {displayExpenseDialog(expenseItem)}
       {getExpenses(expenseReport)}
+      {getErrorNotification()}
       <Button
         variant="link-like"
         className={styles.addExpense}
@@ -136,7 +166,7 @@ export const ExpenseReportScreen = ({
         <Button
           className={styles.continue}
           variant="primary"
-          onClick={() => dispatch({ type: 'submitReport' })}
+          onClick={submitReport}
         >
           Continue
         </Button>

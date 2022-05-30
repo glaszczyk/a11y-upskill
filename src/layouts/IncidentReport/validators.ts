@@ -36,3 +36,18 @@ export const numberValidation = (value: string) => {
     return ''
   }
 }
+
+export const nonEmpty = (
+  value: string,
+  callback: (value: string) => string
+) => {
+  return value ? callback(value) : 'This value is required'
+}
+
+export const nonEmptyText = (value: string) => {
+  return nonEmpty(value, textValidation)
+}
+
+export const nonEmptyNumber = (value: string) => {
+  return nonEmpty(value, numberValidation)
+}

@@ -3,19 +3,32 @@ import { Expense } from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './ExpenseDialog.module.scss'
+import { nonEmptyNumber, nonEmptyText } from '../../validators'
 
 type ExpenseDialogPropTypes = {
   expense: Expense
   onClose: () => void
   onChange: (key: 'cost' | 'description', value: string) => void
+  onBlur: (key: 'cost' | 'description', error: string) => void
   onSubmit: () => void
 }
+
 export const ExpenseDialog = ({
   expense,
   onClose,
   onChange,
+  onBlur,
   onSubmit,
 }: ExpenseDialogPropTypes) => {
+  const handleBlur = (
+    key: 'cost' | 'description',
+    callback: (value: string) => string,
+    currentValue: string
+  ) => {
+    const error = callback(currentValue)
+    onBlur(key, error)
+  }
+
   return (
     <>
       <div className={styles.modalBackground}></div>
@@ -35,6 +48,9 @@ export const ExpenseDialog = ({
             type="text"
             value={expense.description}
             onChange={(value: string) => onChange('description', value)}
+            onBlur={(value: string) =>
+              handleBlur('description', nonEmptyText, value)
+            }
             required={true}
           />
           <Input
@@ -44,6 +60,9 @@ export const ExpenseDialog = ({
             pattern="\d{1,5}"
             value={expense.cost}
             onChange={(value: string) => onChange('cost', value)}
+            onBlur={(value: string) =>
+              handleBlur('cost', nonEmptyNumber, value)
+            }
             required={true}
           />
           <div className={styles.navigation}>

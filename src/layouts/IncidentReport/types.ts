@@ -60,7 +60,7 @@ export type ExpenseReportAction =
   | 'editExpense'
   | 'removeExpense'
   | 'returnToIncidentDetails'
-  | 'submitReport'
+  | 'resetState'
 
 export type ReportDispatchAction =
   | PersonalDetailsDispatchAction

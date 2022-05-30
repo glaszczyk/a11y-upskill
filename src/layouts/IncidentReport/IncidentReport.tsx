@@ -1,44 +1,13 @@
 import React, { useReducer } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 import styles from './IncidentReport.module.scss'
 import { ReportState, ReportStep } from './types'
 import { PersonalDetailsScreen } from './components/PersonalDetailsScreen'
 import { IncidentDetailsScreen } from './components/IncidentDetails'
 import { ExpenseReportScreen } from './components/ExpenseReport'
-import { incidentReportReducer } from './incidentReportReducer'
+import { defaultState, incidentReportReducer } from './incidentReportReducer'
 import { FormStep } from '../../components/FormStep'
 
-const defaultState: ReportState = {
-  step: 'PERSONAL_DETAILS',
-  personalDetails: {
-    firstName: { value: '', error: '' },
-    secondName: { value: '', error: '' },
-    birthday: { value: '', error: '' },
-    email: { value: '', error: '' },
-    phone: { value: '', error: '' },
-    policyNo: { value: '', error: '' },
-  },
-  incidentDetails: {
-    country: { value: '', error: '' },
-    incidentDescription: '',
-    address: { value: '', error: '' },
-    date: { value: '', error: '' },
-    travelPurpose: { value: 'tourism', error: '' },
-  },
-  expenseReport: [
-    {
-      id: uuidv4(),
-      cost: { value: '30', error: '' },
-      description: { value: 'expense no 1' },
-    },
-    {
-      id: uuidv4(),
-      cost: { value: '60', error: '' },
-      description: { value: 'expense no 2' },
-    },
-  ],
-}
 export const IncidentReportContext = React.createContext<{
   state: ReportState
   dispatch: React.Dispatch<any>
