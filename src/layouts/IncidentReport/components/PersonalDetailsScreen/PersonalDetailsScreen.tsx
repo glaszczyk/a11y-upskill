@@ -6,6 +6,12 @@ import { PersonalDetailsAction, ValueWithError } from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './PersonalDetailsScreen.module.scss'
+import {
+  emailValidation,
+  numberValidation,
+  phoneValidation,
+  textValidation,
+} from '../../validators'
 
 type PersonalDetailsScreenPropTypes = {
   labelledBy: StepConfigItem
@@ -44,24 +50,6 @@ export const PersonalDetailsScreen = ({
       })
     }
 
-  const textValidationError = (value: string) => {
-    const nameReg = /^[A-Za-z]*$/
-    if (!nameReg.test(value)) {
-      return 'Text only values expected'
-    } else {
-      return ''
-    }
-  }
-
-  const phoneValidationError = (value: string) => {
-    const nameReg = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
-    if (!nameReg.test(value)) {
-      return 'There was an error with the input above.'
-    } else {
-      return ''
-    }
-  }
-
   return (
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
       <Input
@@ -75,7 +63,7 @@ export const PersonalDetailsScreen = ({
         )}
         onBlur={handleBlurDispatch(
           'changeFirstName',
-          textValidationError,
+          textValidation,
           personalDetails.firstName
         )}
       />
@@ -90,7 +78,7 @@ export const PersonalDetailsScreen = ({
         )}
         onBlur={handleBlurDispatch(
           'changeSecondName',
-          textValidationError,
+          textValidation,
           personalDetails.secondName
         )}
       />
@@ -113,7 +101,7 @@ export const PersonalDetailsScreen = ({
         onChange={handleChangeDispatch('changePhone', personalDetails.phone)}
         onBlur={handleBlurDispatch(
           'changePhone',
-          phoneValidationError,
+          phoneValidation,
           personalDetails.phone
         )}
       />
@@ -123,14 +111,24 @@ export const PersonalDetailsScreen = ({
         type="email"
         value={personalDetails.email}
         onChange={handleChangeDispatch('changeEmail', personalDetails.email)}
+        onBlur={handleBlurDispatch(
+          'changeEmail',
+          emailValidation,
+          personalDetails.email
+        )}
       />
       <Input
         name="policyNo"
         label="Policy Number"
-        type="text"
+        type="number"
         value={personalDetails.policyNo}
         onChange={handleChangeDispatch(
           'changePolicyNo',
+          personalDetails.policyNo
+        )}
+        onBlur={handleBlurDispatch(
+          'changePolicyNo',
+          numberValidation,
           personalDetails.policyNo
         )}
       />

@@ -7,7 +7,7 @@ import { ValueWithError } from '../../layouts/IncidentReport/types'
 type InputPropTypes = {
   name: string
   label: string
-  type: 'text' | 'email' | 'date' | 'tel'
+  type: 'text' | 'email' | 'date' | 'tel' | 'number'
   value: ValueWithError<string | number>
   onChange: (value: string) => void
   onBlur?: (value: string) => void
