@@ -8,7 +8,7 @@ import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { Expense, ExpenseReportAction } from '../../types'
 import DeleteIcon from '/public/trash.svg'
 import EditIcon from '/public/pencil.svg'
-import { ExpenseDialog } from './components/ExpenseDialog'
+import { ExpenseDialog } from '../ExpenseDialog'
 
 const defaultExpense: Expense = { id: '', cost: '', description: '' }
 

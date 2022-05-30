@@ -1,6 +1,6 @@
-import { Button } from '../../../../../../components/Button'
-import { Expense } from '../../../../types'
-import { Input } from '../../../../../../components/Input'
+import { Button } from '../../../../components/Button'
+import { Expense } from '../../types'
+import { Input } from '../../../../components/Input'
 
 import styles from './ExpenseDialog.module.scss'
 

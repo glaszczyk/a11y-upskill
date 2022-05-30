@@ -84,22 +84,22 @@ const Home: NextPage = () => {
             <Blogpost
               title="Renting Vacation Homes"
               imageSrc="/desert1.jpg"
-              href="./renting-vacation-homes"
+              href="/renting-vacation-homes"
             />
             <Blogpost
               title="Popular Travel Destinations for 2021"
               imageSrc="/desert2.jpg"
-              href="./popular-travel-destinations-2021"
+              href="/popular-travel-destinations-2021"
             />
             <Blogpost
               title="Trends & Predictions"
               imageSrc="/airport1.jpg"
-              href="./trends-predictions"
+              href="/trends-predictions"
             />
             <Blogpost
               title="Travel Gear for Safe Travels in 2021"
               imageSrc="/airport2.jpg"
-              href="./travel-gear-2021"
+              href="/travel-gear-2021"
             />
           </GridCellOfFour>
         </Grid>
@@ -132,10 +132,10 @@ const Home: NextPage = () => {
           </GridCell>
           <GridCell responsive justify="space-between" direction="row">
             <p className={styles.buttonLikeLinkSecondary}>
-              <Link href="./contact">Send a message</Link>
+              <Link href="/contact">Send a message</Link>
             </p>
             <p className={styles.buttonLikeLinkPrimary}>
-              <Link href="./contact">Call Us</Link>
+              <Link href="/contact">Call Us</Link>
             </p>
           </GridCell>
         </Grid>
