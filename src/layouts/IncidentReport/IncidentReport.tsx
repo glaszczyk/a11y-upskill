@@ -20,11 +20,11 @@ const defaultState: ReportState = {
     policyNo: { value: '', error: '' },
   },
   incidentDetails: {
-    country: '',
+    country: { value: '', error: '' },
     incidentDescription: '',
-    address: '',
-    date: '',
-    travelPurpose: 'tourism',
+    address: { value: '', error: '' },
+    date: { value: '', error: '' },
+    travelPurpose: { value: 'tourism', error: '' },
   },
   expenseReport: [
     { id: uuidv4(), cost: '$30', description: 'expense no 1' },

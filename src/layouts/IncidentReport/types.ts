@@ -8,10 +8,10 @@ export type PersonalDetails = {
 }
 
 export type IncidentDetails = {
-  travelPurpose: TravelPurpose
-  country: string
-  address: string
-  date: string
+  travelPurpose: ValueWithError<TravelPurpose>
+  country: ValueWithError<string>
+  address: ValueWithError<string>
+  date: ValueWithError<string>
   incidentDescription: string
 }
 export type ValueWithError<T> = {
