@@ -3,11 +3,16 @@ import { FormEvent, useContext } from 'react'
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { TextArea } from '../../../../components/TextArea'
-import { IncidentDetailsAction, RadioButtons } from '../../types'
+import {
+  IncidentDetailsAction,
+  RadioButtons,
+  ValueWithError,
+} from '../../types'
 import { Input } from '../../../../components/Input'
 import { RadioGroup } from '../../../../components/RadioGroup'
 
 import styles from './IncidentDetailsScreen.module.scss'
+import { textValidation } from '../../validators'
 
 type PersonalDetailsScreenPropTypes = {
   labelledBy: StepConfigItem
@@ -21,12 +26,30 @@ export const IncidentDetailsScreen = ({
     dispatch,
   } = useContext(IncidentReportContext)
 
-  const handleDispatch =
-    (actionName: IncidentDetailsAction) => (value: string) =>
+  const handleChangeDispatch =
+    (
+      actionName: IncidentDetailsAction,
+      currentValue: ValueWithError<string | number>
+    ) =>
+    (value: string) =>
       dispatch({
         type: actionName,
-        payload: value,
+        payload: { ...currentValue, value },
       })
+
+  const handleBlurDispatch =
+    (
+      actionName: IncidentDetailsAction,
+      callback: (value: string) => string,
+      currentValue: ValueWithError<string | number>
+    ) =>
+    (value: string) => {
+      const error = callback(value)
+      dispatch({
+        type: actionName,
+        payload: { ...currentValue, error },
+      })
+    }
 
   const radioButtons: RadioButtons = [
     { label: 'tourism', value: 'tourism', checked: true },
@@ -41,28 +64,42 @@ export const IncidentDetailsScreen = ({
         label="Purpose of Travel"
         groupName="travelPurpose"
         buttons={radioButtons}
-        onChange={handleDispatch('changeTravelPurpose')}
+        onChange={handleChangeDispatch(
+          'changeTravelPurpose',
+          incidentDetails.travelPurpose
+        )}
       />
       <Input
         name="country"
         label="Country"
         type="text"
         value={incidentDetails.country}
-        onChange={handleDispatch('changeCountry')}
+        onChange={handleChangeDispatch(
+          'changeCountry',
+          incidentDetails.country
+        )}
+        onBlur={handleBlurDispatch(
+          'changeCountry',
+          textValidation,
+          incidentDetails.country
+        )}
       />
       <Input
         name="address"
         label="Address"
         type="text"
         value={incidentDetails.address}
-        onChange={handleDispatch('changeAddress')}
+        onChange={handleChangeDispatch(
+          'changeAddress',
+          incidentDetails.address
+        )}
       />
       <Input
         name="date"
         label="Date"
         type="date"
         value={incidentDetails.date}
-        onChange={handleDispatch('changeDate')}
+        onChange={handleChangeDispatch('changeDate', incidentDetails.date)}
         className={styles.dateInput}
       />
       <TextArea

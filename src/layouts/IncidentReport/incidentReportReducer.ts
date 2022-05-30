@@ -6,6 +6,38 @@ import {
   ReportDispatchAction,
   ReportState,
 } from './types'
+import { v4 as uuidv4 } from 'uuid'
+
+export const defaultState: ReportState = {
+  step: 'PERSONAL_DETAILS',
+  personalDetails: {
+    firstName: { value: '', error: '' },
+    secondName: { value: '', error: '' },
+    birthday: { value: '', error: '' },
+    email: { value: '', error: '' },
+    phone: { value: '', error: '' },
+    policyNo: { value: '', error: '' },
+  },
+  incidentDetails: {
+    country: { value: '', error: '' },
+    incidentDescription: '',
+    address: { value: '', error: '' },
+    date: { value: '', error: '' },
+    travelPurpose: { value: 'tourism', error: '' },
+  },
+  expenseReport: [
+    {
+      id: uuidv4(),
+      cost: { value: '30', error: '' },
+      description: { value: 'expense no 1' },
+    },
+    {
+      id: uuidv4(),
+      cost: { value: '60', error: '' },
+      description: { value: 'expense no 2' },
+    },
+  ],
+}
 
 const setPersonalDetails = (
   state: ReportState,
@@ -15,7 +47,7 @@ const setPersonalDetails = (
   const { personalDetails } = state
   const updatedPersonalDetails = {
     ...personalDetails,
-    [key]: payload,
+    [key]: { ...payload },
   }
   return {
     ...state,
@@ -116,6 +148,8 @@ export const incidentReportReducer = (
       return { ...state, step: 'PERSONAL_DETAILS' }
     case 'proceedToExpenseReport':
       return { ...state, step: 'EXPENSE_REPORT' }
+    case 'resetState':
+      return { ...defaultState, step: 'PERSONAL_DETAILS' }
     default:
       throw new Error()
   }

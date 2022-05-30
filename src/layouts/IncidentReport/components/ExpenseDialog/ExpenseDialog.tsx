@@ -1,23 +1,34 @@
-import { Button } from '../../../../../../components/Button'
-import { Expense } from '../../../../types'
-import { Input } from '../../../../../../components/Input'
+import { Button } from '../../../../components/Button'
+import { Expense } from '../../types'
+import { Input } from '../../../../components/Input'
 
 import styles from './ExpenseDialog.module.scss'
+import { nonEmptyNumber, nonEmptyText } from '../../validators'
 
 type ExpenseDialogPropTypes = {
   expense: Expense
   onClose: () => void
-  onCostChange: (value: string) => void
-  onDescriptionChange: (value: string) => void
+  onChange: (key: 'cost' | 'description', value: string) => void
+  onBlur: (key: 'cost' | 'description', error: string) => void
   onSubmit: () => void
 }
+
 export const ExpenseDialog = ({
   expense,
   onClose,
-  onCostChange,
-  onDescriptionChange,
+  onChange,
+  onBlur,
   onSubmit,
 }: ExpenseDialogPropTypes) => {
+  const handleBlur = (
+    key: 'cost' | 'description',
+    callback: (value: string) => string,
+    currentValue: string
+  ) => {
+    const error = callback(currentValue)
+    onBlur(key, error)
+  }
+
   return (
     <>
       <div className={styles.modalBackground}></div>
@@ -32,18 +43,27 @@ export const ExpenseDialog = ({
         <div className={styles.content}>
           <h2 id="dialog-title">Expense</h2>
           <Input
-            name="travelPurpose"
+            name="travel-description"
             label="Name"
             type="text"
             value={expense.description}
-            onChange={onDescriptionChange}
+            onChange={(value: string) => onChange('description', value)}
+            onBlur={(value: string) =>
+              handleBlur('description', nonEmptyText, value)
+            }
+            required={true}
           />
           <Input
-            name="travelPurpose"
+            name="travel-price"
             label="Price"
-            type="text"
+            type="number"
+            pattern="\d{1,5}"
             value={expense.cost}
-            onChange={onCostChange}
+            onChange={(value: string) => onChange('cost', value)}
+            onBlur={(value: string) =>
+              handleBlur('cost', nonEmptyNumber, value)
+            }
+            required={true}
           />
           <div className={styles.navigation}>
             <Button variant="secondary" onClick={onClose}>

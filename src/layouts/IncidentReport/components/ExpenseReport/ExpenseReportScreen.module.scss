@@ -33,6 +33,7 @@
 .cost {
   display: inline-block;
   font-weight: bold;
+  height: 1.4rem;
   width: 50px;
   padding-right: 1rem;
   text-align: right;
@@ -41,6 +42,7 @@
 .description {
   display: inline-block;
   flex: 1 1 0;
+  height: 1.4rem;
 }
 
 .expenseIcon {
@@ -54,4 +56,11 @@
 .addExpense {
   align-self: flex-end;
   margin: 1rem 0 2rem;
+}
+
+.error {
+  & > .cost,
+  & > .description {
+    border-bottom: 4px solid $error;
+  }
 }

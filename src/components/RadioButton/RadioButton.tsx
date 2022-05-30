@@ -23,7 +23,6 @@ export const RadioButton = ({
         id={value}
         name={groupName}
         value={value}
-        role="radio"
         type="radio"
         checked={checked}
         onChange={onChange}

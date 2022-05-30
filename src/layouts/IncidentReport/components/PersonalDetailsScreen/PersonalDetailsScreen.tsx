@@ -2,10 +2,16 @@ import { useContext } from 'react'
 
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
-import { PersonalDetailsAction } from '../../types'
+import { PersonalDetailsAction, ValueWithError } from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './PersonalDetailsScreen.module.scss'
+import {
+  emailValidation,
+  numberValidation,
+  phoneValidation,
+  textValidation,
+} from '../../validators'
 
 type PersonalDetailsScreenPropTypes = {
   labelledBy: StepConfigItem
@@ -19,12 +25,30 @@ export const PersonalDetailsScreen = ({
     dispatch,
   } = useContext(IncidentReportContext)
 
-  const handleDispatch =
-    (actionName: PersonalDetailsAction) => (value: string) =>
+  const handleChangeDispatch =
+    (
+      actionName: PersonalDetailsAction,
+      currentValue: ValueWithError<string | number>
+    ) =>
+    (value: string) =>
       dispatch({
         type: actionName,
-        payload: value,
+        payload: { ...currentValue, value },
       })
+
+  const handleBlurDispatch =
+    (
+      actionName: PersonalDetailsAction,
+      callback: (value: string) => string,
+      currentValue: ValueWithError<string | number>
+    ) =>
+    (value: string) => {
+      const error = callback(value)
+      dispatch({
+        type: actionName,
+        payload: { ...currentValue, error },
+      })
+    }
 
   return (
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
@@ -33,43 +57,80 @@ export const PersonalDetailsScreen = ({
         label="First Name"
         type="text"
         value={personalDetails.firstName}
-        onChange={handleDispatch('changeFirstName')}
+        onChange={handleChangeDispatch(
+          'changeFirstName',
+          personalDetails.firstName
+        )}
+        onBlur={handleBlurDispatch(
+          'changeFirstName',
+          textValidation,
+          personalDetails.firstName
+        )}
       />
       <Input
         name="secondName"
         label="Second Name"
         type="text"
         value={personalDetails.secondName}
-        onChange={handleDispatch('changeSecondName')}
+        onChange={handleChangeDispatch(
+          'changeSecondName',
+          personalDetails.secondName
+        )}
+        onBlur={handleBlurDispatch(
+          'changeSecondName',
+          textValidation,
+          personalDetails.secondName
+        )}
       />
       <Input
         name="birthday"
         label="Birthday"
         type="date"
         value={personalDetails.birthday}
-        onChange={handleDispatch('changeBirthday')}
+        onChange={handleChangeDispatch(
+          'changeBirthday',
+          personalDetails.birthday
+        )}
         className={styles.dateInput}
       />
       <Input
         name="phone"
         label="Phone number"
-        type="text"
+        type="tel"
         value={personalDetails.phone}
-        onChange={handleDispatch('changePhone')}
+        onChange={handleChangeDispatch('changePhone', personalDetails.phone)}
+        onBlur={handleBlurDispatch(
+          'changePhone',
+          phoneValidation,
+          personalDetails.phone
+        )}
       />
       <Input
         name="email"
         label="Email"
         type="email"
         value={personalDetails.email}
-        onChange={handleDispatch('changeEmail')}
+        onChange={handleChangeDispatch('changeEmail', personalDetails.email)}
+        onBlur={handleBlurDispatch(
+          'changeEmail',
+          emailValidation,
+          personalDetails.email
+        )}
       />
       <Input
         name="policyNo"
         label="Policy Number"
-        type="text"
+        type="number"
         value={personalDetails.policyNo}
-        onChange={handleDispatch('changePolicyNo')}
+        onChange={handleChangeDispatch(
+          'changePolicyNo',
+          personalDetails.policyNo
+        )}
+        onBlur={handleBlurDispatch(
+          'changePolicyNo',
+          numberValidation,
+          personalDetails.policyNo
+        )}
       />
       <div className={styles.navigation}>
         <Button

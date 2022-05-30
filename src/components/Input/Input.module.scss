@@ -1,3 +1,5 @@
+@import '/src/styles/colors.module';
+
 .inputWrapper {
   display: flex;
   flex-direction: column;
@@ -14,4 +16,11 @@
   font-size: 1.25rem;
   height: 3rem;
   padding-left: 0.5rem;
+  &[aria-invalid='true'] {
+    border: 2px solid $error;
+  }
+}
+
+.error {
+  color: $error;
 }
