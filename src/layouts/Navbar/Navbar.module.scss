@@ -37,11 +37,13 @@
 .buttonLikeLinkPrimary {
   @extend %baseButton;
   background-color: $primaryColor;
+  color: $white;
+  font-weight: bold;
   text-align: center;
 }
 
 .buttonLikeLinkSecondary {
   @extend %baseButton;
-  background-color: $secondaryColor;
+  border: 2px solid $primaryColor;
   text-align: center;
 }
