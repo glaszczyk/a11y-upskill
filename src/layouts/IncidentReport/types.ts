@@ -33,8 +33,8 @@ export type TravelPurpose =
 
 export type Expense = {
   id: string
-  cost: string
-  description: string
+  cost: ValueWithError<string>
+  description: ValueWithError<string>
 }
 
 export type PersonalDetailsAction =

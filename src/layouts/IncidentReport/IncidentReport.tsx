@@ -27,8 +27,16 @@ const defaultState: ReportState = {
     travelPurpose: { value: 'tourism', error: '' },
   },
   expenseReport: [
-    { id: uuidv4(), cost: '$30', description: 'expense no 1' },
-    { id: uuidv4(), cost: '$60', description: 'expense no 2' },
+    {
+      id: uuidv4(),
+      cost: { value: '30', error: '' },
+      description: { value: 'expense no 1' },
+    },
+    {
+      id: uuidv4(),
+      cost: { value: '60', error: '' },
+      description: { value: 'expense no 2' },
+    },
   ],
 }
 export const IncidentReportContext = React.createContext<{

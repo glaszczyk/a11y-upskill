@@ -12,6 +12,8 @@ type InputPropTypes = {
   onChange: (value: string) => void
   onBlur?: (value: string) => void
   className?: string
+  pattern?: string
+  required?: boolean
 }
 export const Input = ({
   type = 'text',
@@ -21,6 +23,8 @@ export const Input = ({
   name,
   value,
   className,
+  pattern,
+  required = false,
 }: InputPropTypes) => {
   const handleChange = (e: FormEvent<HTMLInputElement>) =>
     onChange(e.currentTarget.value)
@@ -44,6 +48,8 @@ export const Input = ({
         onBlur={handleBlur}
         aria-describedby={`error-${name}`}
         aria-invalid={!!value.error}
+        pattern={pattern}
+        required={required}
       />
       <p className={styles.error} id={`error-${name}`}>
         {value.error ? value.error : null}

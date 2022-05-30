@@ -7,15 +7,13 @@ import styles from './ExpenseDialog.module.scss'
 type ExpenseDialogPropTypes = {
   expense: Expense
   onClose: () => void
-  onCostChange: (value: string) => void
-  onDescriptionChange: (value: string) => void
+  onChange: (key: 'cost' | 'description', value: string) => void
   onSubmit: () => void
 }
 export const ExpenseDialog = ({
   expense,
   onClose,
-  onCostChange,
-  onDescriptionChange,
+  onChange,
   onSubmit,
 }: ExpenseDialogPropTypes) => {
   return (
@@ -36,14 +34,17 @@ export const ExpenseDialog = ({
             label="Name"
             type="text"
             value={expense.description}
-            onChange={onDescriptionChange}
+            onChange={(value: string) => onChange('description', value)}
+            required={true}
           />
           <Input
             name="travel-price"
             label="Price"
-            type="text"
+            type="number"
+            pattern="\d{1,5}"
             value={expense.cost}
-            onChange={onCostChange}
+            onChange={(value: string) => onChange('cost', value)}
+            required={true}
           />
           <div className={styles.navigation}>
             <Button variant="secondary" onClick={onClose}>
