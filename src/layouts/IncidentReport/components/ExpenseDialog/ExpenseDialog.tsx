@@ -32,14 +32,14 @@ export const ExpenseDialog = ({
         <div className={styles.content}>
           <h2 id="dialog-title">Expense</h2>
           <Input
-            name="travelPurpose"
+            name="travel-description"
             label="Name"
             type="text"
             value={expense.description}
             onChange={onDescriptionChange}
           />
           <Input
-            name="travelPurpose"
+            name="travel-price"
             label="Price"
             type="text"
             value={expense.cost}

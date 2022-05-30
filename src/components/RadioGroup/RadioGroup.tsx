@@ -1,5 +1,4 @@
 import { FormEvent, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 import styles from './RadioGroup.module.scss'
 import { RadioButtons } from '../../layouts/IncidentReport/types'
@@ -32,7 +31,7 @@ export const RadioGroup = ({
   }
 
   return (
-    <div
+    <fieldset
       role="radiogroup"
       className={styles.groupWrapper}
       aria-labelledby={groupName}
@@ -40,9 +39,9 @@ export const RadioGroup = ({
       <p id={groupName} className={styles.label}>
         {label}
       </p>
-      {buttons.map((button) => (
+      {buttons.map((button, index) => (
         <RadioButton
-          key={uuidv4()}
+          key={`radio-${index}`}
           groupName={groupName}
           label={button.label}
           value={button.value}
@@ -50,6 +49,6 @@ export const RadioGroup = ({
           onChange={handleChange}
         />
       ))}
-    </div>
+    </fieldset>
   )
 }
