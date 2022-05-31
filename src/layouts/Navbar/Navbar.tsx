@@ -3,8 +3,15 @@ import Image from 'next/image'
 import styles from './Navbar.module.scss'
 import Logo from '/public/TheInsurerLogo.svg'
 import Link from 'next/link'
+import { useState } from 'react'
+import classnames from 'classnames'
 
 export const Navbar = () => {
+  const [menuHidden, setMenuHidden] = useState(true)
+  const toggleMenu = () => {
+    setMenuHidden(!menuHidden)
+  }
+
   return (
     <header className={styles.container}>
       <Link href="/">
@@ -18,8 +25,21 @@ export const Navbar = () => {
           />
         </a>
       </Link>
-      <nav aria-label="Main Menu">
-        <ul className={styles.menu} role="menubar">
+      <nav aria-labelledby="main-menu-button" className={styles.navigation}>
+        <button
+          className={styles.menuButton}
+          onClick={toggleMenu}
+          id="main-menu-button"
+        >
+          Main Menu
+        </button>
+        <ul
+          className={classnames(
+            styles.menu,
+            menuHidden ? styles.mobileHidden : null
+          )}
+          role="menubar"
+        >
           <li role="menuitem" className={styles.menuItem}>
             <Link href="/insurance">
               <a>Insurance</a>
