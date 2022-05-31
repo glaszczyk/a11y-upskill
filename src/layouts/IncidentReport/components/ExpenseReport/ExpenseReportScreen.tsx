@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Image from 'next/image'
+import toast from 'react-hot-toast'
 
 import styles from './ExpenseReportScreen.module.scss'
 import { Button } from '../../../../components/Button'
@@ -10,6 +11,7 @@ import DeleteIcon from '/public/trash.svg'
 import EditIcon from '/public/pencil.svg'
 import { ExpenseDialog } from '../ExpenseDialog'
 import classnames from 'classnames'
+import { Toast } from '../Toast/Toast'
 
 const defaultExpense: Expense = {
   id: '',
@@ -69,50 +71,80 @@ export const ExpenseReportScreen = ({
     setDialogDisplayed(false)
     handleDispatch('addExpense', expenseItem)
     setExpenseItem(defaultExpense)
+    toast.custom(<Toast message="Expense added" type="success" />, {
+      duration: 6000,
+      position: 'bottom-right',
+    })
+  }
+
+  const handleRemove = (expense: Expense) => {
+    handleDispatch('removeExpense', expense)
+    toast.custom(<Toast message="Expense removed" type="success" />, {
+      duration: 6000,
+      position: 'bottom-right',
+    })
   }
 
   const submitReport = () => {
-    console.log('Submitted')
     dispatch({ type: 'resetState' })
+    toast.custom(
+      <Toast message="Report submitted successfully" type="success" />,
+      {
+        duration: 6000,
+        position: 'bottom-right',
+      }
+    )
   }
 
-  const getExpenses = (expenses: Expense[]) => (
-    <ol className={styles.expenses}>
-      {expenses.map((expense) => (
-        <li
-          key={expense.id}
-          className={classnames(
-            styles.expense,
-            expense.cost.error ? styles.error : null
-          )}
-        >
-          <span className={styles.cost}>{expense.cost.value}</span>
-          <span className={styles.description}>
-            {expense.description.value}
-          </span>
-          <Button
-            variant="icon"
-            className={styles.expenseIcon}
-            onClick={() => handleDispatch('removeExpense', expense)}
-          >
-            <Image
-              src={DeleteIcon}
-              width={44}
-              height={44}
-              alt="Delete expense"
-            />
-          </Button>
-          <Button
-            variant="icon"
-            className={styles.expenseIcon}
-            onClick={() => handleEdit(expense)}
-          >
-            <Image src={EditIcon} width={44} height={44} alt="Edit expense" />
-          </Button>
-        </li>
-      ))}
-    </ol>
-  )
+  const getExpenses = (expenses: Expense[]) => {
+    if (expenses.length) {
+      return (
+        <ol className={styles.expenses}>
+          {expenses.map((expense) => (
+            <li
+              key={expense.id}
+              className={classnames(
+                styles.expense,
+                expense.cost.error ? styles.error : null
+              )}
+            >
+              <span className={styles.cost}>{expense.cost.value}</span>
+              <span className={styles.description}>
+                {expense.description.value}
+              </span>
+              <Button
+                variant="icon"
+                className={styles.expenseIcon}
+                onClick={() => {
+                  handleRemove(expense)
+                }}
+              >
+                <Image
+                  src={DeleteIcon}
+                  width={44}
+                  height={44}
+                  alt="Delete expense"
+                />
+              </Button>
+              <Button
+                variant="icon"
+                className={styles.expenseIcon}
+                onClick={() => handleEdit(expense)}
+              >
+                <Image
+                  src={EditIcon}
+                  width={44}
+                  height={44}
+                  alt="Edit expense"
+                />
+              </Button>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+    return <p aria-live="polite">No expenses</p>
+  }
 
   const displayExpenseDialog = (expense: Expense) => {
     return (

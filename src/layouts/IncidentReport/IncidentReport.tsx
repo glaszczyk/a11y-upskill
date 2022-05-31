@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 import styles from './IncidentReport.module.scss'
 import { ReportState, ReportStep } from './types'
@@ -61,6 +62,7 @@ export const IncidentReport = () => {
     <IncidentReportContext.Provider value={{ state, dispatch }}>
       <FormStep step={state.step} labels={stepConfigurator} />
       <form className={styles.report}>{getReportPage(state)}</form>
+      <Toaster />
     </IncidentReportContext.Provider>
   )
 }
