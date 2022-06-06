@@ -10,7 +10,7 @@ export const textValidation = (value: string) => {
 export const phoneValidation = (value: string) => {
   const nameReg = /^[+]*[(]?\d{1,3}[)]?[-\s.\/\d]*$/g
   if (!nameReg.test(value)) {
-    return 'There was an error with the input above.'
+    return "Phone number can't be empty."
   } else {
     return ''
   }
@@ -21,7 +21,7 @@ export const emailValidation = (value: string) => {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/
 
   if (!nameReg.test(value)) {
-    return 'There was an error with the input above.'
+    return "Email address can't be empty."
   } else {
     return ''
   }

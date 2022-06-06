@@ -56,6 +56,7 @@ export const PersonalDetailsScreen = ({
         name="firstName"
         label="First Name"
         type="text"
+        required={true}
         value={personalDetails.firstName}
         onChange={handleChangeDispatch(
           'changeFirstName',
@@ -71,6 +72,7 @@ export const PersonalDetailsScreen = ({
         name="secondName"
         label="Second Name"
         type="text"
+        required={true}
         value={personalDetails.secondName}
         onChange={handleChangeDispatch(
           'changeSecondName',
@@ -86,6 +88,7 @@ export const PersonalDetailsScreen = ({
         name="birthday"
         label="Birthday"
         type="date"
+        required={true}
         value={personalDetails.birthday}
         onChange={handleChangeDispatch(
           'changeBirthday',
@@ -97,6 +100,7 @@ export const PersonalDetailsScreen = ({
         name="phone"
         label="Phone number"
         type="tel"
+        required={true}
         value={personalDetails.phone}
         onChange={handleChangeDispatch('changePhone', personalDetails.phone)}
         onBlur={handleBlurDispatch(
@@ -109,6 +113,7 @@ export const PersonalDetailsScreen = ({
         name="email"
         label="Email"
         type="email"
+        required={true}
         value={personalDetails.email}
         onChange={handleChangeDispatch('changeEmail', personalDetails.email)}
         onBlur={handleBlurDispatch(
@@ -121,6 +126,7 @@ export const PersonalDetailsScreen = ({
         name="policyNo"
         label="Policy Number"
         type="number"
+        required={true}
         value={personalDetails.policyNo}
         onChange={handleChangeDispatch(
           'changePolicyNo',

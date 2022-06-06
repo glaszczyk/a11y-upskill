@@ -51,12 +51,7 @@ export const Input = ({
         pattern={pattern}
         required={required}
       />
-      <p
-        className={styles.error}
-        id={`error-${name}`}
-        aria-live="polite"
-        aria-atomic={true}
-      >
+      <p className={styles.error} id={`error-${name}`}>
         {value.error ? value.error : null}
       </p>
     </div>
