@@ -5,6 +5,16 @@
 }
 .navigation {
   @extend %navigation;
+  flex-direction: column;
+}
+
+.buttonsWrapper {
+  @extend %navigation;
+}
+
+.finalValidationMessage {
+  align-self: flex-end;
+  color: $error;
 }
 
 .back {

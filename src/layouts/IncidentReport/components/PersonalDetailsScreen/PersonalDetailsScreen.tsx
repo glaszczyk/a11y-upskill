@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
@@ -13,6 +13,14 @@ import {
   textValidation,
 } from '../../validators'
 
+const filterErrors = (array: ErrorIndicator[], error: ErrorIndicator) =>
+  array.filter((el) => el.actionName !== error.actionName)
+
+type ErrorIndicator = {
+  actionName: PersonalDetailsAction
+  value: string
+}
+
 type PersonalDetailsScreenPropTypes = {
   labelledBy: StepConfigItem
 }
@@ -24,6 +32,9 @@ export const PersonalDetailsScreen = ({
     state: { personalDetails },
     dispatch,
   } = useContext(IncidentReportContext)
+
+  const [errors, setErrors] = useState<ErrorIndicator[]>([])
+  const [message, setMessage] = useState('')
 
   const handleChangeDispatch =
     (
@@ -44,11 +55,24 @@ export const PersonalDetailsScreen = ({
     ) =>
     (value: string) => {
       const error = callback(value)
+      const errorIndicator: ErrorIndicator = { actionName, value: error }
       dispatch({
         type: actionName,
         payload: { ...currentValue, error },
       })
+      const updatedErrors = filterErrors(errors, errorIndicator)
+      error === ''
+        ? setErrors([...updatedErrors])
+        : setErrors([...updatedErrors, errorIndicator])
     }
+
+  const handleContinueClick = () => {
+    if (errors.length === 0) {
+      dispatch({ type: 'proceedToIncidentDetails' })
+    } else {
+      setMessage('You need to properly fill all required fields')
+    }
+  }
 
   return (
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
@@ -139,20 +163,29 @@ export const PersonalDetailsScreen = ({
         )}
       />
       <div className={styles.navigation}>
-        <Button
-          className={styles.back}
-          variant="secondary"
-          onClick={() => null}
+        <div className={styles.buttonsWrapper}>
+          <Button
+            className={styles.back}
+            variant="secondary"
+            onClick={() => null}
+          >
+            Back
+          </Button>
+          <Button
+            className={styles.continue}
+            variant="primary"
+            onClick={handleContinueClick}
+          >
+            Continue
+          </Button>
+        </div>
+        <p
+          className={styles.finalValidationMessage}
+          aria-atomic
+          aria-live="polite"
         >
-          Back
-        </Button>
-        <Button
-          className={styles.continue}
-          variant="primary"
-          onClick={() => dispatch({ type: 'proceedToIncidentDetails' })}
-        >
-          Continue
-        </Button>
+          {message}
+        </p>
       </div>
     </fieldset>
   )

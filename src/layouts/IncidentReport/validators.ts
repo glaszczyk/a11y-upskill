@@ -1,5 +1,5 @@
 export const textValidation = (value: string) => {
-  const nameReg = /^[A-Za-z]*$/
+  const nameReg = /^[A-Za-z]+$/
   if (!nameReg.test(value)) {
     return 'Only text values expected'
   } else {
