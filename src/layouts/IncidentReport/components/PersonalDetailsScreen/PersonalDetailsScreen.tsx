@@ -1,25 +1,22 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
-import { PersonalDetailsAction, ValueWithError } from '../../types'
+import {
+  PersonalDetails,
+  PersonalDetailsAction,
+  ValueWithError,
+} from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './PersonalDetailsScreen.module.scss'
 import {
+  dateValidation,
   emailValidation,
   numberValidation,
   phoneValidation,
   textValidation,
 } from '../../validators'
-
-const filterErrors = (array: ErrorIndicator[], error: ErrorIndicator) =>
-  array.filter((el) => el.actionName !== error.actionName)
-
-type ErrorIndicator = {
-  actionName: PersonalDetailsAction
-  value: string
-}
 
 type PersonalDetailsScreenPropTypes = {
   labelledBy: StepConfigItem
@@ -33,19 +30,36 @@ export const PersonalDetailsScreen = ({
     dispatch,
   } = useContext(IncidentReportContext)
 
-  const [errors, setErrors] = useState<ErrorIndicator[]>([])
+  const [errors, setErrors] = useState<string[]>([])
   const [message, setMessage] = useState('')
+
+  const requiredFieldsFilled = (fields: PersonalDetails) =>
+    (Object.keys(fields) as (keyof typeof fields)[]).forEach((element) => {
+      if (fields[element].required && !Boolean(fields[element].value))
+        dispatch({ type: 'setRequiredEmpty', payload: fields[element] })
+    })
+
+  const getFieldsErrors = (fields: PersonalDetails) =>
+    (Object.keys(fields) as (keyof typeof fields)[]).reduce((acc, current) => {
+      const isValidField =
+        fields[current].required &&
+        Boolean(fields[current].value) &&
+        !Boolean(fields[current].error)
+
+      return isValidField ? [...acc] : [...acc, current]
+    }, [] as (keyof typeof fields)[])
 
   const handleChangeDispatch =
     (
       actionName: PersonalDetailsAction,
       currentValue: ValueWithError<string | number>
     ) =>
-    (value: string) =>
+    (value: string) => {
       dispatch({
         type: actionName,
         payload: { ...currentValue, value },
       })
+    }
 
   const handleBlurDispatch =
     (
@@ -55,24 +69,25 @@ export const PersonalDetailsScreen = ({
     ) =>
     (value: string) => {
       const error = callback(value)
-      const errorIndicator: ErrorIndicator = { actionName, value: error }
       dispatch({
         type: actionName,
         payload: { ...currentValue, error },
       })
-      const updatedErrors = filterErrors(errors, errorIndicator)
-      error === ''
-        ? setErrors([...updatedErrors])
-        : setErrors([...updatedErrors, errorIndicator])
     }
 
   const handleContinueClick = () => {
+    requiredFieldsFilled(personalDetails)
+
     if (errors.length === 0) {
       dispatch({ type: 'proceedToIncidentDetails' })
     } else {
       setMessage('You need to properly fill all required fields')
     }
   }
+
+  useEffect(() => {
+    setErrors(getFieldsErrors(personalDetails))
+  }, [personalDetails])
 
   return (
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
@@ -82,12 +97,9 @@ export const PersonalDetailsScreen = ({
         type="text"
         required={true}
         value={personalDetails.firstName}
-        onChange={handleChangeDispatch(
-          'changeFirstName',
-          personalDetails.firstName
-        )}
+        onChange={handleChangeDispatch('change', personalDetails.firstName)}
         onBlur={handleBlurDispatch(
-          'changeFirstName',
+          'change',
           textValidation,
           personalDetails.firstName
         )}
@@ -116,6 +128,11 @@ export const PersonalDetailsScreen = ({
         value={personalDetails.birthday}
         onChange={handleChangeDispatch(
           'changeBirthday',
+          personalDetails.birthday
+        )}
+        onBlur={handleBlurDispatch(
+          'changeBirthday',
+          dateValidation,
           personalDetails.birthday
         )}
         className={styles.dateInput}

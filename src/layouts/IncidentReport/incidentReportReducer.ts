@@ -11,12 +11,12 @@ import { v4 as uuidv4 } from 'uuid'
 export const defaultState: ReportState = {
   step: 'PERSONAL_DETAILS',
   personalDetails: {
-    firstName: { value: '', error: '' },
-    secondName: { value: '', error: '' },
-    birthday: { value: '', error: '' },
-    email: { value: '', error: '' },
-    phone: { value: '', error: '' },
-    policyNo: { value: '', error: '' },
+    firstName: { key: 'firstName', value: '', error: '', required: true },
+    secondName: { key: 'secondName', value: '', error: '', required: true },
+    birthday: { key: 'birthday', value: '', error: '', required: true },
+    email: { key: 'email', value: '', error: '', required: true },
+    phone: { key: 'phone', value: '', error: '', required: true },
+    policyNo: { key: 'policyNo', value: '', error: '', required: true },
   },
   incidentDetails: {
     country: { value: '', error: '' },
@@ -108,12 +108,50 @@ const addExpense = (state: ReportState, newExpense: Expense) => {
 
   return updateExpenseReport(state, newExpenses())
 }
+const change = (
+  state: ReportState,
+  { payload }: PersonalDetailsDispatchAction
+): ReportState => {
+  const { personalDetails } = state
+  const key = payload?.key || 'firstName'
+  const updatedPersonalDetails = {
+    ...personalDetails,
+    [key]: { ...payload },
+  }
+  return {
+    ...state,
+    personalDetails: { ...updatedPersonalDetails },
+  }
+}
+
+const setRequiredEmptyError = (
+  state: ReportState,
+  { payload }: PersonalDetailsDispatchAction
+): ReportState => {
+  const { personalDetails } = state
+  const key = payload?.key || 'firstName'
+  const updatedPersonalDetails = {
+    ...personalDetails,
+    [key]: {
+      ...personalDetails[key],
+      error: 'Required field cannot be empty',
+    },
+  }
+  return {
+    ...state,
+    personalDetails: { ...updatedPersonalDetails },
+  }
+}
 
 export const incidentReportReducer = (
   state: ReportState,
   action: ReportDispatchAction
 ): ReportState => {
   switch (action.type) {
+    case 'setRequiredEmpty':
+      return setRequiredEmptyError(state, action)
+    case 'change':
+      return change(state, action)
     case 'changeFirstName':
       return setPersonalDetails(state, 'firstName', action)
     case 'changeSecondName':

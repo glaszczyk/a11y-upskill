@@ -27,6 +27,16 @@ export const emailValidation = (value: string) => {
   }
 }
 
+export const dateValidation = (value: string) => {
+  const nameReg = /^\d\d\d\d-\d\d-\d\d$/
+
+  if (!nameReg.test(value)) {
+    return 'Only number values expected.'
+  } else {
+    return ''
+  }
+}
+
 export const numberValidation = (value: string) => {
   const nameReg = /^\d+$/
 

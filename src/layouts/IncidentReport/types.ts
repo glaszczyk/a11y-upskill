@@ -15,8 +15,10 @@ export type IncidentDetails = {
   incidentDescription: string
 }
 export type ValueWithError<T> = {
+  key?: PersonalDetailsKeys
   value: T
   error?: string
+  required?: boolean
 }
 export type Expenses = Expense[]
 
@@ -36,6 +38,13 @@ export type Expense = {
   cost: ValueWithError<string>
   description: ValueWithError<string>
 }
+export type PersonalDetailsKeys =
+  | 'firstName'
+  | 'secondName'
+  | 'birthday'
+  | 'phone'
+  | 'email'
+  | 'policyNo'
 
 export type PersonalDetailsAction =
   | 'changeFirstName'
@@ -44,6 +53,8 @@ export type PersonalDetailsAction =
   | 'changePhone'
   | 'changeEmail'
   | 'changePolicyNo'
+  | 'change'
+  | 'setRequiredEmpty'
   | 'proceedToIncidentDetails'
 
 export type IncidentDetailsAction =
