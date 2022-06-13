@@ -11,12 +11,12 @@ import DeleteIcon from '/public/trash.svg'
 import EditIcon from '/public/pencil.svg'
 import { ExpenseDialog } from '../ExpenseDialog'
 import classnames from 'classnames'
-import { Toast } from '../Toast/Toast'
+import { Toast } from '../Toast'
 
 const defaultExpense: Expense = {
   id: '',
-  cost: { value: '', error: '' },
-  description: { value: '', error: '' },
+  cost: { key: 'cost', value: '', error: '' },
+  description: { key: 'description', value: '', error: '' },
 }
 
 type ExpenseReportScreenPropTypes = {

@@ -7,6 +7,15 @@ export const textValidation = (value: string) => {
   }
 }
 
+export const textWithSpacesValidation = (value: string) => {
+  const nameReg = /^[A-Za-z\s]+$/
+  if (!nameReg.test(value)) {
+    return 'Only text values expected'
+  } else {
+    return ''
+  }
+}
+
 export const phoneValidation = (value: string) => {
   const nameReg = /^[+]*[(]?\d{1,3}[)]?[-\s.\/\d]*$/g
   if (!nameReg.test(value)) {

@@ -2,7 +2,12 @@ import { useContext, useEffect, useState } from 'react'
 
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
-import { PersonalDetails, PersonalDetailsAction, FieldValue } from '../../types'
+import {
+  PersonalDetails,
+  PersonalDetailsAction,
+  FieldValue,
+  PersonalDetailsKeys,
+} from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './PersonalDetailsScreen.module.scss'
@@ -32,15 +37,19 @@ export const PersonalDetailsScreen = ({
   const requiredFieldsFilled = (fields: PersonalDetails) =>
     (Object.keys(fields) as (keyof typeof fields)[]).forEach((element) => {
       if (fields[element].required && !Boolean(fields[element].value))
-        dispatch({ type: 'setRequiredEmpty', payload: fields[element] })
+        dispatch({
+          type: 'setRequiredPersonalDetailsEmpty',
+          payload: fields[element],
+        })
     })
 
   const getFieldsErrors = (fields: PersonalDetails) =>
     (Object.keys(fields) as (keyof typeof fields)[]).reduce((acc, current) => {
-      const isValidField =
-        fields[current].required &&
-        Boolean(fields[current].value) &&
-        !Boolean(fields[current].error)
+      const isValidField = fields[current].required
+        ? fields[current].required &&
+          Boolean(fields[current].value) &&
+          !Boolean(fields[current].error)
+        : true
 
       return isValidField ? [...acc] : [...acc, current]
     }, [] as (keyof typeof fields)[])
@@ -48,7 +57,7 @@ export const PersonalDetailsScreen = ({
   const handleChangeDispatch =
     (
       actionName: PersonalDetailsAction,
-      currentValue: FieldValue<string | number>
+      currentValue: FieldValue<PersonalDetailsKeys, string | number>
     ) =>
     (value: string) => {
       dispatch({
@@ -61,7 +70,7 @@ export const PersonalDetailsScreen = ({
     (
       actionName: PersonalDetailsAction,
       callback: (value: string) => string,
-      currentValue: FieldValue<string | number>
+      currentValue: FieldValue<PersonalDetailsKeys, string | number>
     ) =>
     (value: string) => {
       const error = callback(value)

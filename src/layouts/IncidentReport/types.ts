@@ -1,25 +1,30 @@
 export type PersonalDetails = {
-  firstName: FieldValue<string>
-  secondName: FieldValue<string>
-  birthday: FieldValue<string>
-  phone: FieldValue<string>
-  email: FieldValue<string>
-  policyNo: FieldValue<string>
+  firstName: FieldValue<PersonalDetailsKeys, string>
+  secondName: FieldValue<PersonalDetailsKeys, string>
+  birthday: FieldValue<PersonalDetailsKeys, string>
+  phone: FieldValue<PersonalDetailsKeys, string>
+  email: FieldValue<PersonalDetailsKeys, string>
+  policyNo: FieldValue<PersonalDetailsKeys, string>
 }
 
 export type IncidentDetails = {
-  travelPurpose: FieldValue<TravelPurpose>
-  country: FieldValue<string>
-  address: FieldValue<string>
-  date: FieldValue<string>
-  incidentDescription: string
+  travelPurpose: FieldValue<IncidentDetailsKeys, TravelPurpose>
+  country: FieldValue<IncidentDetailsKeys, string>
+  address: FieldValue<IncidentDetailsKeys, string>
+  date: FieldValue<IncidentDetailsKeys, string>
+  incidentDescription: FieldValue<IncidentDetailsKeys, string>
 }
-export type FieldValue<T> = {
-  key?: PersonalDetailsKeys
+
+export type FieldValue<G, T> = {
+  key?: G
+} & InputValue<T>
+
+export type InputValue<T> = {
   value: T
   error?: string
   required?: boolean
 }
+
 export type Expenses = Expense[]
 
 export type ReportStep =
@@ -35,8 +40,8 @@ export type TravelPurpose =
 
 export type Expense = {
   id: string
-  cost: FieldValue<string>
-  description: FieldValue<string>
+  cost: FieldValue<ExpenseKeys, string>
+  description: FieldValue<ExpenseKeys, string>
 }
 export type PersonalDetailsKeys =
   | 'firstName'
@@ -48,17 +53,23 @@ export type PersonalDetailsKeys =
 
 export type PersonalDetailsAction =
   | 'changePersonalDetails'
-  | 'setRequiredEmpty'
+  | 'setRequiredPersonalDetailsEmpty'
   | 'proceedToIncidentDetails'
 
+export type IncidentDetailsKeys =
+  | 'travelPurpose'
+  | 'country'
+  | 'address'
+  | 'date'
+  | 'incidentDescription'
+
 export type IncidentDetailsAction =
-  | 'changeTravelPurpose'
-  | 'changeCountry'
-  | 'changeAddress'
-  | 'changeDate'
-  | 'changeIncidentDescription'
+  | 'changeIncidentDetails'
+  | 'setRequiredIncidentDetailsEmpty'
   | 'returnToPersonalDetails'
   | 'proceedToExpenseReport'
+
+export type ExpenseKeys = 'cost' | 'description'
 
 export type ExpenseReportAction =
   | 'addExpense'
@@ -74,11 +85,11 @@ export type ReportDispatchAction =
 
 export type PersonalDetailsDispatchAction = {
   type: PersonalDetailsAction
-  payload?: FieldValue<string | number>
+  payload?: FieldValue<PersonalDetailsKeys, string | number>
 }
 export type IncidentDetailsDispatchAction = {
   type: IncidentDetailsAction
-  payload?: string
+  payload?: FieldValue<IncidentDetailsKeys, string | number>
 }
 export type ExpenseReportDispatchAction = {
   type: ExpenseReportAction

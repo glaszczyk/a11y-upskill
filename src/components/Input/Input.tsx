@@ -2,13 +2,13 @@ import { FormEvent } from 'react'
 
 import styles from './Input.module.scss'
 import classnames from 'classnames'
-import { FieldValue } from '../../layouts/IncidentReport/types'
+import { InputValue } from '../../layouts/IncidentReport/types'
 
 type InputPropTypes = {
   name: string
   label: string
   type: 'text' | 'email' | 'date' | 'tel' | 'number'
-  value: FieldValue<string | number>
+  value: InputValue<string | number>
   onChange: (value: string) => void
   onBlur?: (value: string) => void
   className?: string
