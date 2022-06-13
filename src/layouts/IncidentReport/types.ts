@@ -40,8 +40,9 @@ export type TravelPurpose =
 
 export type Expense = {
   id: string
-  cost: FieldValue<ExpenseKeys, string>
-  description: FieldValue<ExpenseKeys, string>
+  cost: FieldValue<ExpenseDetailsKeys, string>
+  description: FieldValue<ExpenseDetailsKeys, string>
+  error?: string
 }
 export type PersonalDetailsKeys =
   | 'firstName'
@@ -69,7 +70,7 @@ export type IncidentDetailsAction =
   | 'returnToPersonalDetails'
   | 'proceedToExpenseReport'
 
-export type ExpenseKeys = 'cost' | 'description'
+export type ExpenseDetailsKeys = 'cost' | 'description'
 
 export type ExpenseReportAction =
   | 'addExpense'

@@ -15,8 +15,8 @@ import { Toast } from '../Toast'
 
 const defaultExpense: Expense = {
   id: '',
-  cost: { key: 'cost', value: '', error: '' },
-  description: { key: 'description', value: '', error: '' },
+  cost: { key: 'cost', value: '', error: '', required: true },
+  description: { key: 'description', value: '', error: '', required: true },
 }
 
 type ExpenseReportScreenPropTypes = {
@@ -26,13 +26,36 @@ type ExpenseReportScreenPropTypes = {
 export const ExpenseReportScreen = ({
   labelledBy,
 }: ExpenseReportScreenPropTypes) => {
-  const [dialogDisplayed, setDialogDisplayed] = useState(false)
-  const [expenseItem, setExpenseItem] = useState(defaultExpense)
-
   const {
     state: { expenseReport },
     dispatch,
   } = useContext(IncidentReportContext)
+
+  const [dialogDisplayed, setDialogDisplayed] = useState(false)
+  const [expenseItem, setExpenseItem] = useState(defaultExpense)
+  const [errors, setErrors] = useState<string[]>([])
+
+  const requiredFieldsFilled = (expenseItem: Expense): void => {
+    let updatedExpense = { ...expenseItem }
+    if (!Boolean(expenseItem.cost.value)) {
+      const updatedCost = {
+        ...expenseItem.cost,
+        error: 'Required field cannot be empty',
+      }
+      updatedExpense = { ...updatedExpense, cost: { ...updatedCost } }
+    }
+    if (!Boolean(expenseItem.description.value)) {
+      const updatedDescription = {
+        ...expenseItem.description,
+        error: 'Required field cannot be empty',
+      }
+      updatedExpense = {
+        ...updatedExpense,
+        description: { ...updatedDescription },
+      }
+    }
+    setExpenseItem(updatedExpense)
+  }
 
   const handleDispatch = (actionName: ExpenseReportAction, value: Expense) =>
     dispatch({
@@ -68,13 +91,22 @@ export const ExpenseReportScreen = ({
   }
 
   const handleSubmitExpense = () => {
-    setDialogDisplayed(false)
-    handleDispatch('addExpense', expenseItem)
-    setExpenseItem(defaultExpense)
-    toast.custom(<Toast message="Expense added" type="success" />, {
-      duration: 6000,
-      position: 'bottom-right',
-    })
+    if (
+      !Boolean(expenseItem.cost.error) &&
+      Boolean(expenseItem.cost.value) &&
+      !Boolean(expenseItem.description.error) &&
+      Boolean(expenseItem.description.value)
+    ) {
+      setDialogDisplayed(false)
+      handleDispatch('addExpense', expenseItem)
+      setExpenseItem(defaultExpense)
+      toast.custom(<Toast message="Expense added" type="success" />, {
+        duration: 6000,
+        position: 'bottom-right',
+      })
+    } else {
+      requiredFieldsFilled(expenseItem)
+    }
   }
 
   const handleRemove = (expense: Expense) => {
@@ -86,14 +118,16 @@ export const ExpenseReportScreen = ({
   }
 
   const submitReport = () => {
-    dispatch({ type: 'resetState' })
-    toast.custom(
-      <Toast message="Report submitted successfully" type="success" />,
-      {
-        duration: 6000,
-        position: 'bottom-right',
-      }
-    )
+    if (errors.length === 0) {
+      dispatch({ type: 'resetState' })
+      toast.custom(
+        <Toast message="Report submitted successfully" type="success" />,
+        {
+          duration: 6000,
+          position: 'bottom-right',
+        }
+      )
+    }
   }
 
   const getExpenses = (expenses: Expense[]) => {

@@ -26,7 +26,7 @@ export const defaultState: ReportState = {
     policyNo: { key: 'policyNo', value: '432', error: '', required: true },
   },
   incidentDetails: {
-    country: { key: 'country', value: '', error: '', required: true },
+    country: { key: 'country', value: 'Poland', error: '', required: true },
     incidentDescription: {
       key: 'incidentDescription',
       value: '',
@@ -34,7 +34,7 @@ export const defaultState: ReportState = {
       required: false,
     },
     address: { key: 'address', value: '', error: '', required: false },
-    date: { key: 'date', value: '', error: '', required: true },
+    date: { key: 'date', value: '2022-02-02', error: '', required: true },
     travelPurpose: {
       key: 'travelPurpose',
       value: 'tourism',
@@ -45,13 +45,21 @@ export const defaultState: ReportState = {
   expenseReport: [
     {
       id: uuidv4(),
-      cost: { value: '30', error: '' },
-      description: { value: 'expense no 1' },
+      cost: { key: 'cost', value: '30', error: '', required: true },
+      description: {
+        key: 'description',
+        value: 'expense no 1',
+        required: true,
+      },
     },
     {
       id: uuidv4(),
-      cost: { value: '60', error: '' },
-      description: { value: 'expense no 2' },
+      cost: { key: 'cost', value: '60', error: '', required: true },
+      description: {
+        key: 'description',
+        value: 'expense no 2',
+        required: true,
+      },
     },
   ],
 }
