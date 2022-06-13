@@ -2,11 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
-import {
-  PersonalDetails,
-  PersonalDetailsAction,
-  ValueWithError,
-} from '../../types'
+import { PersonalDetails, PersonalDetailsAction, FieldValue } from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './PersonalDetailsScreen.module.scss'
@@ -52,7 +48,7 @@ export const PersonalDetailsScreen = ({
   const handleChangeDispatch =
     (
       actionName: PersonalDetailsAction,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<string | number>
     ) =>
     (value: string) => {
       dispatch({
@@ -65,7 +61,7 @@ export const PersonalDetailsScreen = ({
     (
       actionName: PersonalDetailsAction,
       callback: (value: string) => string,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<string | number>
     ) =>
     (value: string) => {
       const error = callback(value)
@@ -97,9 +93,12 @@ export const PersonalDetailsScreen = ({
         type="text"
         required={true}
         value={personalDetails.firstName}
-        onChange={handleChangeDispatch('change', personalDetails.firstName)}
+        onChange={handleChangeDispatch(
+          'changePersonalDetails',
+          personalDetails.firstName
+        )}
         onBlur={handleBlurDispatch(
-          'change',
+          'changePersonalDetails',
           textValidation,
           personalDetails.firstName
         )}
@@ -111,11 +110,11 @@ export const PersonalDetailsScreen = ({
         required={true}
         value={personalDetails.secondName}
         onChange={handleChangeDispatch(
-          'changeSecondName',
+          'changePersonalDetails',
           personalDetails.secondName
         )}
         onBlur={handleBlurDispatch(
-          'changeSecondName',
+          'changePersonalDetails',
           textValidation,
           personalDetails.secondName
         )}
@@ -127,11 +126,11 @@ export const PersonalDetailsScreen = ({
         required={true}
         value={personalDetails.birthday}
         onChange={handleChangeDispatch(
-          'changeBirthday',
+          'changePersonalDetails',
           personalDetails.birthday
         )}
         onBlur={handleBlurDispatch(
-          'changeBirthday',
+          'changePersonalDetails',
           dateValidation,
           personalDetails.birthday
         )}
@@ -143,9 +142,12 @@ export const PersonalDetailsScreen = ({
         type="tel"
         required={true}
         value={personalDetails.phone}
-        onChange={handleChangeDispatch('changePhone', personalDetails.phone)}
+        onChange={handleChangeDispatch(
+          'changePersonalDetails',
+          personalDetails.phone
+        )}
         onBlur={handleBlurDispatch(
-          'changePhone',
+          'changePersonalDetails',
           phoneValidation,
           personalDetails.phone
         )}
@@ -156,9 +158,12 @@ export const PersonalDetailsScreen = ({
         type="email"
         required={true}
         value={personalDetails.email}
-        onChange={handleChangeDispatch('changeEmail', personalDetails.email)}
+        onChange={handleChangeDispatch(
+          'changePersonalDetails',
+          personalDetails.email
+        )}
         onBlur={handleBlurDispatch(
-          'changeEmail',
+          'changePersonalDetails',
           emailValidation,
           personalDetails.email
         )}
@@ -170,11 +175,11 @@ export const PersonalDetailsScreen = ({
         required={true}
         value={personalDetails.policyNo}
         onChange={handleChangeDispatch(
-          'changePolicyNo',
+          'changePersonalDetails',
           personalDetails.policyNo
         )}
         onBlur={handleBlurDispatch(
-          'changePolicyNo',
+          'changePersonalDetails',
           numberValidation,
           personalDetails.policyNo
         )}

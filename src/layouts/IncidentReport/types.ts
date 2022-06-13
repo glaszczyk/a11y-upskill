@@ -1,20 +1,20 @@
 export type PersonalDetails = {
-  firstName: ValueWithError<string>
-  secondName: ValueWithError<string>
-  birthday: ValueWithError<string>
-  phone: ValueWithError<string>
-  email: ValueWithError<string>
-  policyNo: ValueWithError<string>
+  firstName: FieldValue<string>
+  secondName: FieldValue<string>
+  birthday: FieldValue<string>
+  phone: FieldValue<string>
+  email: FieldValue<string>
+  policyNo: FieldValue<string>
 }
 
 export type IncidentDetails = {
-  travelPurpose: ValueWithError<TravelPurpose>
-  country: ValueWithError<string>
-  address: ValueWithError<string>
-  date: ValueWithError<string>
+  travelPurpose: FieldValue<TravelPurpose>
+  country: FieldValue<string>
+  address: FieldValue<string>
+  date: FieldValue<string>
   incidentDescription: string
 }
-export type ValueWithError<T> = {
+export type FieldValue<T> = {
   key?: PersonalDetailsKeys
   value: T
   error?: string
@@ -35,8 +35,8 @@ export type TravelPurpose =
 
 export type Expense = {
   id: string
-  cost: ValueWithError<string>
-  description: ValueWithError<string>
+  cost: FieldValue<string>
+  description: FieldValue<string>
 }
 export type PersonalDetailsKeys =
   | 'firstName'
@@ -47,13 +47,7 @@ export type PersonalDetailsKeys =
   | 'policyNo'
 
 export type PersonalDetailsAction =
-  | 'changeFirstName'
-  | 'changeSecondName'
-  | 'changeBirthday'
-  | 'changePhone'
-  | 'changeEmail'
-  | 'changePolicyNo'
-  | 'change'
+  | 'changePersonalDetails'
   | 'setRequiredEmpty'
   | 'proceedToIncidentDetails'
 
@@ -80,7 +74,7 @@ export type ReportDispatchAction =
 
 export type PersonalDetailsDispatchAction = {
   type: PersonalDetailsAction
-  payload?: ValueWithError<string | number>
+  payload?: FieldValue<string | number>
 }
 export type IncidentDetailsDispatchAction = {
   type: IncidentDetailsAction

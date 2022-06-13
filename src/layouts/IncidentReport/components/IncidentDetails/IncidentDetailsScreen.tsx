@@ -3,11 +3,7 @@ import { FormEvent, useContext } from 'react'
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { TextArea } from '../../../../components/TextArea'
-import {
-  IncidentDetailsAction,
-  RadioButtons,
-  ValueWithError,
-} from '../../types'
+import { IncidentDetailsAction, RadioButtons, FieldValue } from '../../types'
 import { Input } from '../../../../components/Input'
 import { RadioGroup } from '../../../../components/RadioGroup'
 
@@ -29,7 +25,7 @@ export const IncidentDetailsScreen = ({
   const handleChangeDispatch =
     (
       actionName: IncidentDetailsAction,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<string | number>
     ) =>
     (value: string) =>
       dispatch({
@@ -41,7 +37,7 @@ export const IncidentDetailsScreen = ({
     (
       actionName: IncidentDetailsAction,
       callback: (value: string) => string,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<string | number>
     ) =>
     (value: string) => {
       const error = callback(value)

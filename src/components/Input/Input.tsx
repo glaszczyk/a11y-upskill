@@ -2,13 +2,13 @@ import { FormEvent } from 'react'
 
 import styles from './Input.module.scss'
 import classnames from 'classnames'
-import { ValueWithError } from '../../layouts/IncidentReport/types'
+import { FieldValue } from '../../layouts/IncidentReport/types'
 
 type InputPropTypes = {
   name: string
   label: string
   type: 'text' | 'email' | 'date' | 'tel' | 'number'
-  value: ValueWithError<string | number>
+  value: FieldValue<string | number>
   onChange: (value: string) => void
   onBlur?: (value: string) => void
   className?: string
@@ -37,6 +37,7 @@ export const Input = ({
     <div className={styles.inputWrapper}>
       <label className={styles.label} htmlFor={name}>
         {label}
+        {required ? <span>*</span> : null}
       </label>
       <input
         className={classNames}

@@ -39,21 +39,7 @@ export const defaultState: ReportState = {
   ],
 }
 
-const setPersonalDetails = (
-  state: ReportState,
-  key: PropertyKey,
-  { payload }: PersonalDetailsDispatchAction
-): ReportState => {
-  const { personalDetails } = state
-  const updatedPersonalDetails = {
-    ...personalDetails,
-    [key]: { ...payload },
-  }
-  return {
-    ...state,
-    personalDetails: { ...updatedPersonalDetails },
-  }
-}
+type ReportSlice = 'personalDetails' | 'incidentDetails' | 'expenseReport'
 
 const setIncidentDetails = (
   state: ReportState,
@@ -110,17 +96,18 @@ const addExpense = (state: ReportState, newExpense: Expense) => {
 }
 const change = (
   state: ReportState,
+  slice: ReportSlice,
   { payload }: PersonalDetailsDispatchAction
 ): ReportState => {
-  const { personalDetails } = state
+  const sliceData = state[slice]
   const key = payload?.key || 'firstName'
-  const updatedPersonalDetails = {
-    ...personalDetails,
+  const updatedSlice = {
+    ...sliceData,
     [key]: { ...payload },
   }
   return {
     ...state,
-    personalDetails: { ...updatedPersonalDetails },
+    [slice]: { ...updatedSlice },
   }
 }
 
@@ -150,20 +137,8 @@ export const incidentReportReducer = (
   switch (action.type) {
     case 'setRequiredEmpty':
       return setRequiredEmptyError(state, action)
-    case 'change':
-      return change(state, action)
-    case 'changeFirstName':
-      return setPersonalDetails(state, 'firstName', action)
-    case 'changeSecondName':
-      return setPersonalDetails(state, 'secondName', action)
-    case 'changeBirthday':
-      return setPersonalDetails(state, 'birthday', action)
-    case 'changePhone':
-      return setPersonalDetails(state, 'phone', action)
-    case 'changeEmail':
-      return setPersonalDetails(state, 'email', action)
-    case 'changePolicyNo':
-      return setPersonalDetails(state, 'policyNo', action)
+    case 'changePersonalDetails':
+      return change(state, 'personalDetails', action)
     case 'changeTravelPurpose':
       return setIncidentDetails(state, 'travelPurpose', action)
     case 'changeCountry':
