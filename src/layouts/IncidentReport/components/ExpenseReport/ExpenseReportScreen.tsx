@@ -12,6 +12,7 @@ import EditIcon from '/public/pencil.svg'
 import { ExpenseDialog } from '../ExpenseDialog'
 import classnames from 'classnames'
 import { Toast } from '../Toast'
+import { Dialog } from '../../../../components/Dialog'
 
 const defaultExpense: Expense = {
   id: '',
@@ -32,6 +33,8 @@ export const ExpenseReportScreen = ({
   } = useContext(IncidentReportContext)
 
   const [dialogDisplayed, setDialogDisplayed] = useState(false)
+  const [deleteConfirmationDisplayed, setDeleteConfirmationDisplayed] =
+    useState(false)
   const [expenseItem, setExpenseItem] = useState(defaultExpense)
   const [errors, setErrors] = useState<string[]>([])
 
@@ -85,9 +88,18 @@ export const ExpenseReportScreen = ({
     setExpenseItem(defaultExpense)
   }
 
+  const handleDeleteConfirmationDialogClose = () => {
+    setDeleteConfirmationDisplayed(false)
+  }
+
   const handleAddNewExpense = () => {
     setExpenseItem({ ...defaultExpense, id: uuidv4() })
     setDialogDisplayed(true)
+  }
+
+  const handleExpenseDelete = (expense: Expense) => {
+    setExpenseItem(expense)
+    setDeleteConfirmationDisplayed(true)
   }
 
   const handleSubmitExpense = () => {
@@ -111,6 +123,7 @@ export const ExpenseReportScreen = ({
 
   const handleRemove = (expense: Expense) => {
     handleDispatch('removeExpense', expense)
+    setDeleteConfirmationDisplayed(false)
     toast.custom(<Toast message="Expense removed" type="success" />, {
       duration: 6000,
       position: 'bottom-right',
@@ -150,7 +163,7 @@ export const ExpenseReportScreen = ({
                 variant="icon"
                 className={styles.expenseIcon}
                 onClick={() => {
-                  handleRemove(expense)
+                  handleExpenseDelete(expense)
                 }}
               >
                 <Image
@@ -194,6 +207,26 @@ export const ExpenseReportScreen = ({
     )
   }
 
+  const displayDeleteConfirmationDialog = (expense: Expense) => {
+    return (
+      deleteConfirmationDisplayed && (
+        <Dialog
+          onClose={handleDeleteConfirmationDialogClose}
+          onSubmit={() => handleRemove(expense)}
+          submitLabel={'Delete'}
+        >
+          <p
+            aria-live="polite"
+            aria-atomic={true}
+            style={{ marginTop: 'auto' }}
+          >
+            Do you want to remove expense {expense.description.value}
+          </p>
+        </Dialog>
+      )
+    )
+  }
+
   const getErrorNotification = () => {
     const expensesWithError = expenseReport.reduce((acc, current) => {
       return !!(current.cost.error || current.description.error || acc)
@@ -211,6 +244,7 @@ export const ExpenseReportScreen = ({
   return (
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
       {displayExpenseDialog(expenseItem)}
+      {displayDeleteConfirmationDialog(expenseItem)}
       {getExpenses(expenseReport)}
       {getErrorNotification()}
       <Button

@@ -2,15 +2,20 @@ import { Button } from '../Button'
 import FocusLock from 'react-focus-lock'
 
 import styles from './Dialog.module.scss'
-import { ReactNode } from 'react'
 
 type DialogPropTypes = {
   onClose: () => void
   onSubmit: () => void
-  children: ReactNode | ReactNode[]
+  children: JSX.Element | JSX.Element[]
+  submitLabel?: string
 }
 
-export const Dialog = ({ onClose, onSubmit, children }: DialogPropTypes) => {
+export const Dialog = ({
+  onClose,
+  onSubmit,
+  children,
+  submitLabel = 'Add',
+}: DialogPropTypes) => {
   return (
     <FocusLock>
       <>
@@ -30,7 +35,7 @@ export const Dialog = ({ onClose, onSubmit, children }: DialogPropTypes) => {
                 Cancel
               </Button>
               <Button variant="primary" onClick={onSubmit}>
-                Add
+                {submitLabel}
               </Button>
             </div>
           </div>
