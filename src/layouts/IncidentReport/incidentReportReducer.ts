@@ -2,7 +2,9 @@ import {
   Expense,
   Expenses,
   IncidentDetailsDispatchAction,
+  IncidentDetailsKeys,
   PersonalDetailsDispatchAction,
+  PersonalDetailsKeys,
   ReportDispatchAction,
   ReportState,
 } from './types'
@@ -11,64 +13,55 @@ import { v4 as uuidv4 } from 'uuid'
 export const defaultState: ReportState = {
   step: 'PERSONAL_DETAILS',
   personalDetails: {
-    firstName: { value: '', error: '' },
-    secondName: { value: '', error: '' },
-    birthday: { value: '', error: '' },
-    email: { value: '', error: '' },
-    phone: { value: '', error: '' },
-    policyNo: { value: '', error: '' },
+    firstName: { key: 'firstName', value: 'ala', error: '', required: true },
+    secondName: { key: 'secondName', value: 'ma', error: '', required: true },
+    birthday: {
+      key: 'birthday',
+      value: '2000-12-12',
+      error: '',
+      required: true,
+    },
+    email: { key: 'email', value: 'a@a.com', error: '', required: true },
+    phone: { key: 'phone', value: '432', error: '', required: true },
+    policyNo: { key: 'policyNo', value: '432', error: '', required: true },
   },
   incidentDetails: {
-    country: { value: '', error: '' },
-    incidentDescription: '',
-    address: { value: '', error: '' },
-    date: { value: '', error: '' },
-    travelPurpose: { value: 'tourism', error: '' },
+    country: { key: 'country', value: 'Poland', error: '', required: true },
+    incidentDescription: {
+      key: 'incidentDescription',
+      value: '',
+      error: '',
+      required: false,
+    },
+    address: { key: 'address', value: '', error: '', required: false },
+    date: { key: 'date', value: '2022-02-02', error: '', required: true },
+    travelPurpose: {
+      key: 'travelPurpose',
+      value: 'tourism',
+      error: '',
+      required: false,
+    },
   },
   expenseReport: [
     {
       id: uuidv4(),
-      cost: { value: '30', error: '' },
-      description: { value: 'expense no 1' },
+      cost: { key: 'cost', value: '30', error: '', required: true },
+      description: {
+        key: 'description',
+        value: 'expense no 1',
+        required: true,
+      },
     },
     {
       id: uuidv4(),
-      cost: { value: '60', error: '' },
-      description: { value: 'expense no 2' },
+      cost: { key: 'cost', value: '60', error: '', required: true },
+      description: {
+        key: 'description',
+        value: 'expense no 2',
+        required: true,
+      },
     },
   ],
-}
-
-const setPersonalDetails = (
-  state: ReportState,
-  key: PropertyKey,
-  { payload }: PersonalDetailsDispatchAction
-): ReportState => {
-  const { personalDetails } = state
-  const updatedPersonalDetails = {
-    ...personalDetails,
-    [key]: { ...payload },
-  }
-  return {
-    ...state,
-    personalDetails: { ...updatedPersonalDetails },
-  }
-}
-
-const setIncidentDetails = (
-  state: ReportState,
-  key: PropertyKey,
-  { payload }: IncidentDetailsDispatchAction
-): ReportState => {
-  const { incidentDetails } = state
-  const updatedIncidentDetails = {
-    ...incidentDetails,
-    [key]: payload,
-  }
-  return {
-    ...state,
-    incidentDetails: { ...updatedIncidentDetails },
-  }
 }
 
 const updateExpenseReport = (
@@ -108,34 +101,89 @@ const addExpense = (state: ReportState, newExpense: Expense) => {
 
   return updateExpenseReport(state, newExpenses())
 }
+const changePersonalDetails = (
+  state: ReportState,
+  { payload }: PersonalDetailsDispatchAction
+): ReportState => {
+  const { personalDetails } = state
+  const key: PersonalDetailsKeys = payload?.key || 'firstName'
+  const updatedPersonalDetails = {
+    ...personalDetails,
+    [key]: { ...payload },
+  }
+  return {
+    ...state,
+    personalDetails: { ...updatedPersonalDetails },
+  }
+}
+
+const changeIncidentDetails = (
+  state: ReportState,
+  { payload }: IncidentDetailsDispatchAction
+): ReportState => {
+  const { incidentDetails } = state
+  const key: IncidentDetailsKeys = payload?.key || 'travelPurpose'
+  const updatedIncidentDetails = {
+    ...incidentDetails,
+    [key]: payload,
+  }
+  return {
+    ...state,
+    incidentDetails: { ...updatedIncidentDetails },
+  }
+}
+
+const setRequiredPersonalDetailsEmpty = (
+  state: ReportState,
+  { payload }: PersonalDetailsDispatchAction
+): ReportState => {
+  const { personalDetails } = state
+  const key: PersonalDetailsKeys = payload?.key || 'firstName'
+  const updatedPersonalDetails = {
+    ...personalDetails,
+    [key]: {
+      ...personalDetails[key],
+      error: 'Required field cannot be empty',
+    },
+  }
+  return {
+    ...state,
+    personalDetails: { ...updatedPersonalDetails },
+  }
+}
+
+const setRequiredIncidentDetailsEmpty = (
+  state: ReportState,
+  { payload }: IncidentDetailsDispatchAction
+): ReportState => {
+  const { incidentDetails } = state
+  const key: IncidentDetailsKeys = payload?.key || 'travelPurpose'
+  const updatedIncidentDetails = {
+    ...incidentDetails,
+    [key]: {
+      ...incidentDetails[key],
+      error: 'Required field cannot be empty',
+    },
+  }
+  return {
+    ...state,
+    incidentDetails: { ...updatedIncidentDetails },
+  }
+}
 
 export const incidentReportReducer = (
   state: ReportState,
   action: ReportDispatchAction
 ): ReportState => {
   switch (action.type) {
-    case 'changeFirstName':
-      return setPersonalDetails(state, 'firstName', action)
-    case 'changeSecondName':
-      return setPersonalDetails(state, 'secondName', action)
-    case 'changeBirthday':
-      return setPersonalDetails(state, 'birthday', action)
-    case 'changePhone':
-      return setPersonalDetails(state, 'phone', action)
-    case 'changeEmail':
-      return setPersonalDetails(state, 'email', action)
-    case 'changePolicyNo':
-      return setPersonalDetails(state, 'policyNo', action)
-    case 'changeTravelPurpose':
-      return setIncidentDetails(state, 'travelPurpose', action)
-    case 'changeCountry':
-      return setIncidentDetails(state, 'country', action)
-    case 'changeAddress':
-      return setIncidentDetails(state, 'address', action)
-    case 'changeDate':
-      return setIncidentDetails(state, 'date', action)
-    case 'changeIncidentDescription':
-      return setIncidentDetails(state, 'incidentDescription', action)
+    case 'setRequiredPersonalDetailsEmpty':
+      return setRequiredPersonalDetailsEmpty(state, action)
+    case 'changePersonalDetails':
+      return changePersonalDetails(state, action)
+    case 'setRequiredIncidentDetailsEmpty':
+      return setRequiredIncidentDetailsEmpty(state, action)
+    case 'changeIncidentDetails':
+      return changeIncidentDetails(state, action)
     case 'removeExpense':
       return removeExpense(state, action.payload)
     case 'addExpense':

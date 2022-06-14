@@ -1,12 +1,18 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
-import { PersonalDetailsAction, ValueWithError } from '../../types'
+import {
+  PersonalDetails,
+  PersonalDetailsAction,
+  FieldValue,
+  PersonalDetailsKeys,
+} from '../../types'
 import { Input } from '../../../../components/Input'
 
 import styles from './PersonalDetailsScreen.module.scss'
 import {
+  dateValidation,
   emailValidation,
   numberValidation,
   phoneValidation,
@@ -25,22 +31,46 @@ export const PersonalDetailsScreen = ({
     dispatch,
   } = useContext(IncidentReportContext)
 
+  const [errors, setErrors] = useState<string[]>([])
+  const [message, setMessage] = useState('')
+
+  const requiredFieldsFilled = (fields: PersonalDetails) =>
+    (Object.keys(fields) as (keyof typeof fields)[]).forEach((element) => {
+      if (fields[element].required && !Boolean(fields[element].value))
+        dispatch({
+          type: 'setRequiredPersonalDetailsEmpty',
+          payload: fields[element],
+        })
+    })
+
+  const getFieldsErrors = (fields: PersonalDetails) =>
+    (Object.keys(fields) as (keyof typeof fields)[]).reduce((acc, current) => {
+      const isValidField = fields[current].required
+        ? fields[current].required &&
+          Boolean(fields[current].value) &&
+          !Boolean(fields[current].error)
+        : true
+
+      return isValidField ? [...acc] : [...acc, current]
+    }, [] as (keyof typeof fields)[])
+
   const handleChangeDispatch =
     (
       actionName: PersonalDetailsAction,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<PersonalDetailsKeys, string | number>
     ) =>
-    (value: string) =>
+    (value: string) => {
       dispatch({
         type: actionName,
         payload: { ...currentValue, value },
       })
+    }
 
   const handleBlurDispatch =
     (
       actionName: PersonalDetailsAction,
       callback: (value: string) => string,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<PersonalDetailsKeys, string | number>
     ) =>
     (value: string) => {
       const error = callback(value)
@@ -50,19 +80,34 @@ export const PersonalDetailsScreen = ({
       })
     }
 
+  const handleContinueClick = () => {
+    requiredFieldsFilled(personalDetails)
+
+    if (errors.length === 0) {
+      dispatch({ type: 'proceedToIncidentDetails' })
+    } else {
+      setMessage('You need to properly fill all required fields')
+    }
+  }
+
+  useEffect(() => {
+    setErrors(getFieldsErrors(personalDetails))
+  }, [personalDetails])
+
   return (
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
       <Input
         name="firstName"
         label="First Name"
         type="text"
+        required={true}
         value={personalDetails.firstName}
         onChange={handleChangeDispatch(
-          'changeFirstName',
+          'changePersonalDetails',
           personalDetails.firstName
         )}
         onBlur={handleBlurDispatch(
-          'changeFirstName',
+          'changePersonalDetails',
           textValidation,
           personalDetails.firstName
         )}
@@ -71,13 +116,14 @@ export const PersonalDetailsScreen = ({
         name="secondName"
         label="Second Name"
         type="text"
+        required={true}
         value={personalDetails.secondName}
         onChange={handleChangeDispatch(
-          'changeSecondName',
+          'changePersonalDetails',
           personalDetails.secondName
         )}
         onBlur={handleBlurDispatch(
-          'changeSecondName',
+          'changePersonalDetails',
           textValidation,
           personalDetails.secondName
         )}
@@ -86,9 +132,15 @@ export const PersonalDetailsScreen = ({
         name="birthday"
         label="Birthday"
         type="date"
+        required={true}
         value={personalDetails.birthday}
         onChange={handleChangeDispatch(
-          'changeBirthday',
+          'changePersonalDetails',
+          personalDetails.birthday
+        )}
+        onBlur={handleBlurDispatch(
+          'changePersonalDetails',
+          dateValidation,
           personalDetails.birthday
         )}
         className={styles.dateInput}
@@ -97,10 +149,14 @@ export const PersonalDetailsScreen = ({
         name="phone"
         label="Phone number"
         type="tel"
+        required={true}
         value={personalDetails.phone}
-        onChange={handleChangeDispatch('changePhone', personalDetails.phone)}
+        onChange={handleChangeDispatch(
+          'changePersonalDetails',
+          personalDetails.phone
+        )}
         onBlur={handleBlurDispatch(
-          'changePhone',
+          'changePersonalDetails',
           phoneValidation,
           personalDetails.phone
         )}
@@ -109,10 +165,14 @@ export const PersonalDetailsScreen = ({
         name="email"
         label="Email"
         type="email"
+        required={true}
         value={personalDetails.email}
-        onChange={handleChangeDispatch('changeEmail', personalDetails.email)}
+        onChange={handleChangeDispatch(
+          'changePersonalDetails',
+          personalDetails.email
+        )}
         onBlur={handleBlurDispatch(
-          'changeEmail',
+          'changePersonalDetails',
           emailValidation,
           personalDetails.email
         )}
@@ -121,32 +181,42 @@ export const PersonalDetailsScreen = ({
         name="policyNo"
         label="Policy Number"
         type="number"
+        required={true}
         value={personalDetails.policyNo}
         onChange={handleChangeDispatch(
-          'changePolicyNo',
+          'changePersonalDetails',
           personalDetails.policyNo
         )}
         onBlur={handleBlurDispatch(
-          'changePolicyNo',
+          'changePersonalDetails',
           numberValidation,
           personalDetails.policyNo
         )}
       />
       <div className={styles.navigation}>
-        <Button
-          className={styles.back}
-          variant="secondary"
-          onClick={() => null}
+        <div className={styles.buttonsWrapper}>
+          <Button
+            className={styles.back}
+            variant="secondary"
+            onClick={() => null}
+          >
+            Back
+          </Button>
+          <Button
+            className={styles.continue}
+            variant="primary"
+            onClick={handleContinueClick}
+          >
+            Continue
+          </Button>
+        </div>
+        <p
+          className={styles.finalValidationMessage}
+          aria-atomic
+          aria-live="polite"
         >
-          Back
-        </Button>
-        <Button
-          className={styles.continue}
-          variant="primary"
-          onClick={() => dispatch({ type: 'proceedToIncidentDetails' })}
-        >
-          Continue
-        </Button>
+          {message}
+        </p>
       </div>
     </fieldset>
   )

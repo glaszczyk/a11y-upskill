@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { Button } from '../../../../components/Button'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
@@ -6,13 +6,15 @@ import { TextArea } from '../../../../components/TextArea'
 import {
   IncidentDetailsAction,
   RadioButtons,
-  ValueWithError,
+  FieldValue,
+  IncidentDetailsKeys,
+  IncidentDetails,
 } from '../../types'
 import { Input } from '../../../../components/Input'
 import { RadioGroup } from '../../../../components/RadioGroup'
 
 import styles from './IncidentDetailsScreen.module.scss'
-import { textValidation } from '../../validators'
+import { dateValidation, textWithSpacesValidation } from '../../validators'
 
 type PersonalDetailsScreenPropTypes = {
   labelledBy: StepConfigItem
@@ -26,10 +28,33 @@ export const IncidentDetailsScreen = ({
     dispatch,
   } = useContext(IncidentReportContext)
 
+  const [errors, setErrors] = useState<string[]>([])
+  const [message, setMessage] = useState('')
+
+  const requiredFieldsFilled = (fields: IncidentDetails) =>
+    (Object.keys(fields) as (keyof typeof fields)[]).forEach((element) => {
+      if (fields[element].required && !Boolean(fields[element].value))
+        dispatch({
+          type: 'setRequiredIncidentDetailsEmpty',
+          payload: fields[element],
+        })
+    })
+
+  const getFieldsErrors = (fields: IncidentDetails) =>
+    (Object.keys(fields) as (keyof typeof fields)[]).reduce((acc, current) => {
+      const isValidField = fields[current].required
+        ? fields[current].required &&
+          Boolean(fields[current].value) &&
+          !Boolean(fields[current].error)
+        : true
+
+      return isValidField ? [...acc] : [...acc, current]
+    }, [] as (keyof typeof fields)[])
+
   const handleChangeDispatch =
     (
       actionName: IncidentDetailsAction,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<IncidentDetailsKeys, string | number>
     ) =>
     (value: string) =>
       dispatch({
@@ -41,7 +66,7 @@ export const IncidentDetailsScreen = ({
     (
       actionName: IncidentDetailsAction,
       callback: (value: string) => string,
-      currentValue: ValueWithError<string | number>
+      currentValue: FieldValue<IncidentDetailsKeys, string | number>
     ) =>
     (value: string) => {
       const error = callback(value)
@@ -51,12 +76,26 @@ export const IncidentDetailsScreen = ({
       })
     }
 
+  const handleContinueClick = () => {
+    requiredFieldsFilled(incidentDetails)
+
+    if (errors.length === 0) {
+      dispatch({ type: 'proceedToExpenseReport' })
+    } else {
+      setMessage('You need to properly fill all required fields')
+    }
+  }
+
   const radioButtons: RadioButtons = [
     { label: 'tourism', value: 'tourism', checked: true },
     { label: 'study / mental work', value: 'study / mental work' },
     { value: 'physical work', label: 'physical work' },
     { value: 'high-risk sport', label: 'high-risk sport' },
   ]
+
+  useEffect(() => {
+    setErrors(getFieldsErrors(incidentDetails))
+  }, [incidentDetails])
 
   return (
     <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
@@ -65,7 +104,7 @@ export const IncidentDetailsScreen = ({
         groupName="travelPurpose"
         buttons={radioButtons}
         onChange={handleChangeDispatch(
-          'changeTravelPurpose',
+          'changeIncidentDetails',
           incidentDetails.travelPurpose
         )}
       />
@@ -73,14 +112,15 @@ export const IncidentDetailsScreen = ({
         name="country"
         label="Country"
         type="text"
+        required={true}
         value={incidentDetails.country}
         onChange={handleChangeDispatch(
-          'changeCountry',
+          'changeIncidentDetails',
           incidentDetails.country
         )}
         onBlur={handleBlurDispatch(
-          'changeCountry',
-          textValidation,
+          'changeIncidentDetails',
+          textWithSpacesValidation,
           incidentDetails.country
         )}
       />
@@ -90,7 +130,7 @@ export const IncidentDetailsScreen = ({
         type="text"
         value={incidentDetails.address}
         onChange={handleChangeDispatch(
-          'changeAddress',
+          'changeIncidentDetails',
           incidentDetails.address
         )}
       />
@@ -98,38 +138,54 @@ export const IncidentDetailsScreen = ({
         name="date"
         label="Date"
         type="date"
+        required={true}
         value={incidentDetails.date}
-        onChange={handleChangeDispatch('changeDate', incidentDetails.date)}
+        onChange={handleChangeDispatch(
+          'changeIncidentDetails',
+          incidentDetails.date
+        )}
+        onBlur={handleBlurDispatch(
+          'changeIncidentDetails',
+          dateValidation,
+          incidentDetails.date
+        )}
         className={styles.dateInput}
       />
       <TextArea
         name="incidentDescription"
         label="Incident Description"
-        value={incidentDetails.incidentDescription}
+        value={incidentDetails.incidentDescription.value}
         rows={5}
         cols={30}
-        onChange={(e: FormEvent<HTMLTextAreaElement>) =>
-          dispatch({
-            type: 'changeIncidentDescription',
-            payload: e.currentTarget.value,
-          })
-        }
+        onChange={handleChangeDispatch(
+          'changeIncidentDetails',
+          incidentDetails.incidentDescription
+        )}
       />
       <div className={styles.navigation}>
-        <Button
-          className={styles.back}
-          variant="secondary"
-          onClick={() => dispatch({ type: 'returnToPersonalDetails' })}
+        <div className={styles.buttonsWrapper}>
+          <Button
+            className={styles.back}
+            variant="secondary"
+            onClick={() => dispatch({ type: 'returnToPersonalDetails' })}
+          >
+            Back
+          </Button>
+          <Button
+            className={styles.continue}
+            variant="primary"
+            onClick={handleContinueClick}
+          >
+            Continue
+          </Button>
+        </div>
+        <p
+          className={styles.finalValidationMessage}
+          aria-atomic
+          aria-live="polite"
         >
-          Back
-        </Button>
-        <Button
-          className={styles.continue}
-          variant="primary"
-          onClick={() => dispatch({ type: 'proceedToExpenseReport' })}
-        >
-          Continue
-        </Button>
+          {message}
+        </p>
       </div>
     </fieldset>
   )

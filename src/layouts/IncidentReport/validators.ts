@@ -1,5 +1,14 @@
 export const textValidation = (value: string) => {
-  const nameReg = /^[A-Za-z]*$/
+  const nameReg = /^[A-Za-z]+$/
+  if (!nameReg.test(value)) {
+    return 'Only text values expected'
+  } else {
+    return ''
+  }
+}
+
+export const textWithSpacesValidation = (value: string) => {
+  const nameReg = /^[A-Za-z\s]+$/
   if (!nameReg.test(value)) {
     return 'Only text values expected'
   } else {
@@ -10,7 +19,7 @@ export const textValidation = (value: string) => {
 export const phoneValidation = (value: string) => {
   const nameReg = /^[+]*[(]?\d{1,3}[)]?[-\s.\/\d]*$/g
   if (!nameReg.test(value)) {
-    return 'There was an error with the input above.'
+    return "Phone number can't be empty."
   } else {
     return ''
   }
@@ -21,7 +30,17 @@ export const emailValidation = (value: string) => {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/
 
   if (!nameReg.test(value)) {
-    return 'There was an error with the input above.'
+    return "Email address can't be empty."
+  } else {
+    return ''
+  }
+}
+
+export const dateValidation = (value: string) => {
+  const nameReg = /^\d\d\d\d-\d\d-\d\d$/
+
+  if (!nameReg.test(value)) {
+    return 'Only number values expected.'
   } else {
     return ''
   }

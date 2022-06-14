@@ -5,6 +5,7 @@ import classnames from 'classnames'
 type ButtonPropTypes = {
   children: React.ReactNode | React.ReactNode[]
   variant: 'primary' | 'secondary' | 'icon' | 'link-like'
+  disabled?: boolean
   className?: string
   onClick: () => void
 }
@@ -14,6 +15,7 @@ export const Button = ({
   variant,
   onClick,
   className,
+  disabled = false,
 }: ButtonPropTypes) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault()
@@ -21,7 +23,7 @@ export const Button = ({
   }
   const classNames = classnames(styles[`${variant}-button`], className)
   return (
-    <button className={classNames} onClick={handleClick}>
+    <button disabled={disabled} className={classNames} onClick={handleClick}>
       {children}
     </button>
   )

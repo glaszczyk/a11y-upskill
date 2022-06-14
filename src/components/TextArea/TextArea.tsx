@@ -8,16 +8,24 @@ type InputPropTypes = {
   rows: number
   cols: number
   value: string
-  onChange: (e: FormEvent<HTMLTextAreaElement>) => void
+  onChange: (value: string) => void
+  onBlur?: (value: string) => void
 }
 export const TextArea = ({
   rows,
   cols,
   onChange,
+  onBlur,
   label,
   name,
   value,
 }: InputPropTypes) => {
+  const handleChange = (e: FormEvent<HTMLTextAreaElement>) =>
+    onChange(e.currentTarget.value)
+
+  const handleBlur = (e: FormEvent<HTMLTextAreaElement>) =>
+    onBlur ? onBlur(e.currentTarget.value) : console.log()
+
   return (
     <div className={styles.inputWrapper}>
       <label className={styles.label} htmlFor={name}>
@@ -30,7 +38,8 @@ export const TextArea = ({
         value={value}
         rows={rows}
         cols={cols}
-        onChange={onChange}
+        onChange={handleChange}
+        onBlur={handleBlur}
       />
     </div>
   )
