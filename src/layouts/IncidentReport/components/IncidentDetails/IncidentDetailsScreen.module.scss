@@ -1,0 +1,30 @@
+@import '../IncidentReportSteps.module';
+
+.step {
+  @extend %step;
+}
+.navigation {
+  @extend %navigation;
+  flex-direction: column;
+}
+
+.buttonsWrapper {
+  @extend %navigation;
+}
+
+.finalValidationMessage {
+  align-self: flex-end;
+  color: $error;
+}
+
+.back {
+  @extend %back;
+}
+
+.continue {
+  @extend %continue;
+}
+
+.dateInput {
+  font-family: 'Roboto', sans-serif;
+}

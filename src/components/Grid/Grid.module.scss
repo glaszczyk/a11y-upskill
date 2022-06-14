@@ -1,0 +1,36 @@
+@import 'src/styles/mediaQuery.module';
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: calc(100% - 4rem);
+  @include min-small {
+    width: 400px;
+  }
+  @include min-medium {
+    flex-wrap: nowrap;
+    width: calc(100% - 4rem);
+  }
+  @include min-limited {
+    width: 960px;
+    margin: 0 auto;
+  }
+}
+
+.gap-big {
+  margin: 1rem 0;
+  @include min-small {
+    margin: 2rem 0;
+  }
+  @include min-medium {
+    margin: 3rem 0;
+  }
+  @include min-large {
+    margin: 5rem 0;
+  }
+}
+
+.gap-none {
+  margin: 0;
+}

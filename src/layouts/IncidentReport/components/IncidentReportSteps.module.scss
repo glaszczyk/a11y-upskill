@@ -1,0 +1,40 @@
+@import 'src/styles/colors.module';
+@import 'src/styles/mediaQuery.module';
+
+%baseButton {
+  max-width: 160px;
+  @include min-medium {
+    max-width: 200px;
+  }
+}
+
+%step {
+  align-items: center;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  width: 100%;
+  @include min-small {
+    width: 460px;
+  }
+  @include min-medium {
+    width: 512px;
+  }
+}
+
+%navigation {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+%back {
+  @extend %baseButton;
+}
+
+%continue {
+  @extend %baseButton;
+  margin-left: auto;
+}

@@ -1,0 +1,40 @@
+@import 'src/styles/mediaQuery.module';
+
+%gridBase {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gridCellOfFourFixed {
+  @extend %gridBase;
+  flex: 1 1 100%;
+}
+.gridCellOfFourResponsive {
+  @extend %gridBase;
+  flex: 1 1 100%;
+  @include min-medium {
+    flex: 1 1 40%;
+  }
+  @include min-large {
+    flex: 1 1 40%;
+  }
+}
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-spaceBetween {
+  justify-content: space-between;
+}
+
+.direction-row {
+  flex-direction: column;
+  @include min-small {
+    align-items: flex-start;
+    flex-direction: row;
+  }
+}
+
+.direction-column {
+  flex-direction: column;
+}

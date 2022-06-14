@@ -1,0 +1,17 @@
+@import 'src/styles/colors.module';
+
+.toast {
+  border-radius: 5px;
+  color: $white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  padding: 1rem;
+}
+
+.success {
+  background-color: $success;
+}
+
+.error {
+  background-color: $error;
+}

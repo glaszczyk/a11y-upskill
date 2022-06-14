@@ -1,0 +1,30 @@
+@import 'src/styles/colors.module';
+@import 'src/styles/mediaQuery.module';
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  width: 100%;
+  @include min-small {
+    width: 440px;
+  }
+  @include min-medium {
+    width: 512px;
+  }
+}
+
+.step {
+  border: 2px solid $primaryColor;
+  border-radius: 0.5rem;
+  list-style: none;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+.active {
+  background-color: $primaryColor;
+  color: $white;
+  font-weight: bold;
+}

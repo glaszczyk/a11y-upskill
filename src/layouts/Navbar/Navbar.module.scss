@@ -1,0 +1,85 @@
+@import '/src/styles/mediaQuery.module';
+@import '/src/components/Button/Button.module';
+
+.container {
+  align-items: center;
+  display: flex;
+  margin: 1rem 1rem 0;
+  justify-content: space-between;
+  @include min-small {
+    flex-direction: row;
+  }
+}
+
+.navigation {
+  position: relative;
+}
+
+.menuButton {
+  background-color: $white;
+  font-weight: bold;
+  padding: 1rem;
+  @include min-medium {
+    display: none;
+  }
+}
+
+.menu {
+  box-shadow: $black 0 10px 8px;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  right: 0;
+  top: 35px;
+  padding: 1rem;
+  position: absolute;
+  width: 130px;
+  z-index: 101;
+  @include min-medium {
+    box-shadow: none;
+    flex-direction: row;
+    justify-content: flex-end;
+    right: unset;
+    position: relative;
+    top: unset;
+    width: unset;
+  }
+}
+
+.mobileHidden {
+  display: none;
+  @include min-medium {
+    display: flex;
+  }
+}
+
+.menuItem {
+  list-style: none;
+  margin-left: 0;
+  margin-top: 0.5rem;
+  @include min-medium {
+    margin-left: 2rem;
+  }
+  & :focus {
+    font-weight: bold;
+    margin-top: unset;
+  }
+}
+
+.logo {
+}
+
+.buttonLikeLinkPrimary {
+  @extend %baseButton;
+  background-color: $primaryColor;
+  color: $white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.buttonLikeLinkSecondary {
+  @extend %baseButton;
+  border: 2px solid $primaryColor;
+  text-align: center;
+}

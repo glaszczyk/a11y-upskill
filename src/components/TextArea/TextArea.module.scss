@@ -1,0 +1,18 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.textarea {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.25rem;
+  padding-left: 0.5rem;
+  resize: none;
+}
