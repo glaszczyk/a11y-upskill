@@ -218,7 +218,7 @@ export const ExpenseReportScreen = ({
           <p
             aria-live="polite"
             aria-atomic={true}
-            style={{ marginTop: 'auto' }}
+            style={{ marginTop: 'auto', marginBottom: 'auto' }}
           >
             Do you want to remove expense {expense.description.value}
           </p>

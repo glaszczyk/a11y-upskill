@@ -54,5 +54,7 @@
 
 .navigation {
   @extend %navigation;
-  margin-top: auto;
+  bottom: 1rem;
+  position: absolute;
+  width: calc(100% - 2rem);
 }
