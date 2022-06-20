@@ -15,6 +15,7 @@ export const Footer = () => {
               alt="Return to main menu"
               width={200}
               height={43}
+              priority={true}
             />
           </a>
         </Link>

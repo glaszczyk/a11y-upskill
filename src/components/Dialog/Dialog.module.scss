@@ -1,6 +1,6 @@
-@import '../../../../styles/mediaQuery.module';
-@import '../../../../styles/colors.module';
-@import '../IncidentReportSteps.module';
+@import 'src/styles/mediaQuery.module';
+@import 'src/styles/colors.module';
+@import 'src/layouts/IncidentReport/components/IncidentReportSteps.module';
 
 .modalBackground {
   background-color: $black;
@@ -54,4 +54,7 @@
 
 .navigation {
   @extend %navigation;
+  bottom: 1rem;
+  position: absolute;
+  width: calc(100% - 2rem);
 }
