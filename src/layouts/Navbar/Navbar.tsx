@@ -22,6 +22,7 @@ export const Navbar = () => {
             alt="Return to main page"
             width={200}
             height={43}
+            priority={true}
           />
         </a>
       </Link>
