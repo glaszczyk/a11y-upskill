@@ -13,20 +13,20 @@ import { v4 as uuidv4 } from 'uuid'
 export const defaultState: ReportState = {
   step: 'PERSONAL_DETAILS',
   personalDetails: {
-    firstName: { key: 'firstName', value: 'ala', error: '', required: true },
-    secondName: { key: 'secondName', value: 'ma', error: '', required: true },
+    firstName: { key: 'firstName', value: '', error: '', required: true },
+    secondName: { key: 'secondName', value: '', error: '', required: true },
     birthday: {
       key: 'birthday',
-      value: '2000-12-12',
+      value: '',
       error: '',
       required: true,
     },
-    email: { key: 'email', value: 'a@a.com', error: '', required: true },
-    phone: { key: 'phone', value: '432', error: '', required: true },
-    policyNo: { key: 'policyNo', value: '432', error: '', required: true },
+    email: { key: 'email', value: '', error: '', required: true },
+    phone: { key: 'phone', value: '', error: '', required: true },
+    policyNo: { key: 'policyNo', value: '', error: '', required: true },
   },
   incidentDetails: {
-    country: { key: 'country', value: 'Poland', error: '', required: true },
+    country: { key: 'country', value: '', error: '', required: true },
     incidentDescription: {
       key: 'incidentDescription',
       value: '',
@@ -34,7 +34,7 @@ export const defaultState: ReportState = {
       required: false,
     },
     address: { key: 'address', value: '', error: '', required: false },
-    date: { key: 'date', value: '2022-02-02', error: '', required: true },
+    date: { key: 'date', value: '', error: '', required: true },
     travelPurpose: {
       key: 'travelPurpose',
       value: 'tourism',
