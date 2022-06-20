@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import Image from 'next/image'
 import toast from 'react-hot-toast'
+import classnames from 'classnames'
 
-import styles from './ExpenseReportScreen.module.scss'
 import { Button } from '../../../../components/Button'
+import { Dialog } from '../../../../components/Dialog'
+import { Delete } from '../../../../components/Button/Delete'
+import { Edit } from '../../../../components/Button/Edit'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { Expense, ExpenseReportAction } from '../../types'
-import DeleteIcon from '/public/trash.svg'
-import EditIcon from '/public/pencil.svg'
 import { ExpenseDialog } from '../ExpenseDialog'
-import classnames from 'classnames'
 import { Toast } from '../Toast'
-import { Dialog } from '../../../../components/Dialog'
+
+import styles from './ExpenseReportScreen.module.scss'
 
 const defaultExpense: Expense = {
   id: '',
@@ -166,24 +166,14 @@ export const ExpenseReportScreen = ({
                   handleExpenseDelete(expense)
                 }}
               >
-                <Image
-                  src={DeleteIcon}
-                  width={44}
-                  height={44}
-                  alt="Delete expense"
-                />
+                <Delete />
               </Button>
               <Button
                 variant="icon"
                 className={styles.expenseIcon}
                 onClick={() => handleEdit(expense)}
               >
-                <Image
-                  src={EditIcon}
-                  width={44}
-                  height={44}
-                  alt="Edit expense"
-                />
+                <Edit />
               </Button>
             </li>
           ))}
@@ -215,6 +205,7 @@ export const ExpenseReportScreen = ({
           onSubmit={() => handleRemove(expense)}
           submitLabel={'Delete'}
         >
+          <h2 id="dialog-title">Delete Expense</h2>
           <p
             aria-live="polite"
             aria-atomic={true}

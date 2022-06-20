@@ -1,10 +1,9 @@
 import FocusLock from 'react-focus-lock'
 
-import Close from '/public/Close.svg'
 import { Button } from '../Button'
+import { Close } from '../Button/Close'
 
 import styles from './Dialog.module.scss'
-import Image from 'next/image'
 
 type DialogPropTypes = {
   onClose: () => void
@@ -29,12 +28,7 @@ export const Dialog = ({
           aria-labelledby="dialog-title"
         >
           <Button className={styles.close} variant="icon" onClick={onClose}>
-            <Image
-              src={Close}
-              alt="Return to main page"
-              width={44}
-              height={44}
-            />
+            <Close />
           </Button>
           <div className={styles.content}>
             {children}
