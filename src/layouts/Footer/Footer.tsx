@@ -1,7 +1,8 @@
-import styles from './Footer.module.scss'
-import Image from 'next/image'
 import Link from 'next/link'
-import Logo from '../../../public/TheInsurerLogo.svg'
+
+import { Logo } from '../../components/Button/Logo'
+
+import styles from './Footer.module.scss'
 
 export const Footer = () => {
   return (
@@ -9,14 +10,7 @@ export const Footer = () => {
       <div className={styles.imageContainer}>
         <Link href="/">
           <a>
-            <Image
-              src={Logo}
-              className={styles.logo}
-              alt="Return to main menu"
-              width={200}
-              height={43}
-              priority={true}
-            />
+            <Logo />
           </a>
         </Link>
       </div>

@@ -1,10 +1,10 @@
-import Image from 'next/image'
-
-import styles from './Navbar.module.scss'
-import Logo from '/public/TheInsurerLogo.svg'
 import Link from 'next/link'
 import { useState } from 'react'
 import classnames from 'classnames'
+
+import { Logo } from '../../components/Button/Logo'
+
+import styles from './Navbar.module.scss'
 
 export const Navbar = () => {
   const [menuHidden, setMenuHidden] = useState(true)
@@ -16,14 +16,7 @@ export const Navbar = () => {
     <header className={styles.container}>
       <Link href="/">
         <a>
-          <Image
-            src={Logo}
-            className={styles.logo}
-            alt="Return to main page"
-            width={200}
-            height={43}
-            priority={true}
-          />
+          <Logo />
         </a>
       </Link>
       <nav aria-labelledby="main-menu-button" className={styles.navigation}>
