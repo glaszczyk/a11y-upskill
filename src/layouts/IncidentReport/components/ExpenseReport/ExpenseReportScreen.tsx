@@ -21,11 +21,11 @@ const defaultExpense: Expense = {
 }
 
 type ExpenseReportScreenPropTypes = {
-  labelledBy: StepConfigItem
+  currentStep: StepConfigItem
 }
 
 export const ExpenseReportScreen = ({
-  labelledBy,
+  currentStep,
 }: ExpenseReportScreenPropTypes) => {
   const {
     state: { expenseReport },
@@ -233,7 +233,10 @@ export const ExpenseReportScreen = ({
   }, [dialogDisplayed])
 
   return (
-    <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
+    <fieldset className={styles.step} aria-labelledby={currentStep.labelId}>
+      <legend>
+        <h2>{currentStep.name}</h2>
+      </legend>
       {displayExpenseDialog(expenseItem)}
       {displayDeleteConfirmationDialog(expenseItem)}
       {getExpenses(expenseReport)}
