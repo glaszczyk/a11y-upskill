@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import toast from 'react-hot-toast'
 import classnames from 'classnames'
+import { toast } from 'react-toastify'
 
 import { Button } from '../../../../components/Button'
 import { Dialog } from '../../../../components/Dialog'
@@ -10,7 +10,6 @@ import { Edit } from '../../../../components/Button/Edit'
 import { IncidentReportContext, StepConfigItem } from '../../IncidentReport'
 import { Expense, ExpenseReportAction } from '../../types'
 import { ExpenseDialog } from '../ExpenseDialog'
-import { Toast } from '../Toast'
 
 import styles from './ExpenseReportScreen.module.scss'
 
@@ -112,10 +111,7 @@ export const ExpenseReportScreen = ({
       setDialogDisplayed(false)
       handleDispatch('addExpense', expenseItem)
       setExpenseItem(defaultExpense)
-      toast.custom(<Toast message="Expense added" type="success" />, {
-        duration: 6000,
-        position: 'bottom-right',
-      })
+      toast.success('Expense added', { hideProgressBar: true })
     } else {
       requiredFieldsFilled(expenseItem)
     }
@@ -124,22 +120,15 @@ export const ExpenseReportScreen = ({
   const handleRemove = (expense: Expense) => {
     handleDispatch('removeExpense', expense)
     setDeleteConfirmationDisplayed(false)
-    toast.custom(<Toast message="Expense removed" type="success" />, {
-      duration: 6000,
-      position: 'bottom-right',
-    })
+    toast.success('Expense removed', { hideProgressBar: true })
   }
 
   const submitReport = () => {
     if (errors.length === 0) {
       dispatch({ type: 'resetState' })
-      toast.custom(
-        <Toast message="Report submitted successfully" type="success" />,
-        {
-          duration: 6000,
-          position: 'bottom-right',
-        }
-      )
+      toast.success('Report submitted successfully', {
+        hideProgressBar: true,
+      })
     }
   }
 
