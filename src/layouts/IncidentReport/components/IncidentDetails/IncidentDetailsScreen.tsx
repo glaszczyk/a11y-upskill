@@ -17,11 +17,11 @@ import styles from './IncidentDetailsScreen.module.scss'
 import { dateValidation, textWithSpacesValidation } from '../../validators'
 
 type PersonalDetailsScreenPropTypes = {
-  labelledBy: StepConfigItem
+  currentStep: StepConfigItem
 }
 
 export const IncidentDetailsScreen = ({
-  labelledBy,
+  currentStep,
 }: PersonalDetailsScreenPropTypes) => {
   const {
     state: { incidentDetails },
@@ -98,7 +98,10 @@ export const IncidentDetailsScreen = ({
   }, [incidentDetails])
 
   return (
-    <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
+    <fieldset className={styles.step} aria-labelledby={currentStep.labelId}>
+      <legend>
+        <h2>{currentStep.name}</h2>
+      </legend>
       <RadioGroup
         label="Purpose of Travel"
         groupName="travelPurpose"

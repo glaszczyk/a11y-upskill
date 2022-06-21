@@ -47,13 +47,13 @@ export const IncidentReport = () => {
   const getReportPage = (state: ReportState) => {
     switch (state.step) {
       case 'PERSONAL_DETAILS': {
-        return <PersonalDetailsScreen labelledBy={getStepLabel(state.step)} />
+        return <PersonalDetailsScreen currentStep={getStepLabel(state.step)} />
       }
       case 'INCIDENT_DETAILS': {
-        return <IncidentDetailsScreen labelledBy={getStepLabel(state.step)} />
+        return <IncidentDetailsScreen currentStep={getStepLabel(state.step)} />
       }
       case 'EXPENSE_REPORT': {
-        return <ExpenseReportScreen labelledBy={getStepLabel(state.step)} />
+        return <ExpenseReportScreen currentStep={getStepLabel(state.step)} />
       }
     }
   }

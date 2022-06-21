@@ -20,11 +20,11 @@ import {
 } from '../../validators'
 
 type PersonalDetailsScreenPropTypes = {
-  labelledBy: StepConfigItem
+  currentStep: StepConfigItem
 }
 
 export const PersonalDetailsScreen = ({
-  labelledBy,
+  currentStep,
 }: PersonalDetailsScreenPropTypes) => {
   const {
     state: { personalDetails },
@@ -95,7 +95,10 @@ export const PersonalDetailsScreen = ({
   }, [personalDetails])
 
   return (
-    <fieldset className={styles.step} aria-labelledby={labelledBy.labelId}>
+    <fieldset className={styles.step} aria-labelledby={currentStep.labelId}>
+      <legend>
+        <h2>{currentStep.name}</h2>
+      </legend>
       <Input
         name="firstName"
         label="First Name"
