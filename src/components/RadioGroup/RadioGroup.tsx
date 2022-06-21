@@ -36,9 +36,9 @@ export const RadioGroup = ({
       className={styles.groupWrapper}
       aria-labelledby={groupName}
     >
-      <p id={groupName} className={styles.label}>
+      <legend id={groupName} className={styles.label}>
         {label}
-      </p>
+      </legend>
       {buttons.map((button, index) => (
         <RadioButton
           key={`radio-${index}`}
